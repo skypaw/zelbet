@@ -3,21 +3,23 @@ import numpy as np
 
 print("Projektowanie zbrojenia symetrycznego\n")
 
-fyd = float(input("Obliczeniowa granica plastyczności stali [MPa]: "))
-Es = float(input("Granica sprężystości stali [GPa]: ")) * float(10 ** 3)
+f_yd = float(input("Obliczeniowa granica plastyczności stali [MPa]: "))
+es = float(input("Granica sprężystości stali [GPa]: ")) * float(10 ** 3)
 
-# Wartości które nie powinny być stałe tylko zależne  od klasy betonu, mam do tego tabelę ale nie wiem jak wkleić na razie
-lambda1 = float(0.8)
-eta1 = float(1)
-fcd = float(17.9)
+# Wartości które nie powinny być stałe tylko zależne  od klasy betonu, mam
+# do tego tabelę ale nie wiem jak wkleić na razie
+
+lambda_bet = float(0.8)
+eta_bet = float(1)
+f_cd = float(17.9)
 
 # Wartości stałe
 
-Epsilon_cu3 = float(0.0035)
-Epsilon_c3 = float(0.00175)
+epsilon_cu3 = float(0.0035)
+epsilon_c3 = float(0.00175)
 
-print(fyd)
-print(str(Es) + " MPa")
+print(f"Obliczeniowa granica plastyczności stali {f_yd} [MPa]")
+print(str(es) + " MPa")
 
 # Właściwości geometryczne
 
@@ -26,51 +28,104 @@ a2 = float(input("Wartość otuliny a2 [mm]: ")) * float(10 ** -3)
 h = float(input("Wysokość przekroju [cm]: ")) * float(10 ** -2)
 b = float(input("Szerokość przekroju [cm]: ")) * float(10 ** -2)
 
-d = h - a1  # trzeba zaokrąglić  do 3 liczy po przecinku, ale tez jeszcze nie wiem jak
+d = round(h - a1, 4)  # trzeba zaokrąglić  do 3 liczy po przecinku, ale tez jeszcze nie wiem jak
 
 print(str(d) + "  <- Wysokość użyteczna przekroju [m]")
 
 # Obliczanie mimośrodów
 
-M_ed = float(input("Wielkość momentu w przekroju: "))
-N_ed = float(input("Wielkość siły normalnej w przekroju: "))
+m_ed = float(input("Wielkość momentu w przekroju: "))
+n_ed = float(input("Wielkość siły normalnej w przekroju: "))
 
-e = abs(M_ed / N_ed)
+e = round(abs(m_ed / n_ed), 4)
 
-e_s1: float = float(e + 0.5 * h - a1)
-e_s2 = float(e - 0.5 * h + a2)
+e_s1 = round(float(e + 0.5 * h - a1), 4)
+e_s2 = round(float(e - 0.5 * h + a2), 4)
 
 print(e_s1)
+print(e_s2)
 
 # Rozpoczęcie obliczeń
 
+x_lim = round((epsilon_cu3 * d) / (epsilon_cu3 + f_yd / es), 4)
 
-x_lim = (Epsilon_cu3 * d) / (Epsilon_cu3 + fyd / Es)
+Epsilon_yd = float(f_yd / es)
 
-Epsilon_yd = float(fyd / Es)
-
-x_min_minus_yd = (Epsilon_cu3 * a2) / (Epsilon_cu3 + fyd / Es)
-x_min_yd = (Epsilon_cu3 * a2) / (Epsilon_cu3 - fyd / Es)
-x_0 = (1 - Epsilon_c3 / Epsilon_cu3) * h
-x_max_yd = (Epsilon_yd * x_0 - Epsilon_c3 * a2) / (Epsilon_yd + Epsilon_c3)
+x_min_minus_yd = round((epsilon_cu3 * a2) / (epsilon_cu3 + f_yd / es), 4)
+x_min_yd = round((epsilon_cu3 * a2) / (epsilon_cu3 - f_yd / es), 4)
+x_0 = round((1 - epsilon_c3 / epsilon_cu3) * h, 4)
+x_max_yd = round((Epsilon_yd * x_0 - epsilon_c3 * a2) / (Epsilon_yd + epsilon_c3), 4)
 
 print(x_lim)
+print(x_min_minus_yd)
+print(x_min_yd)
+print(x_0)
+print(x_max_yd)
 
-x = float(1) / lambda1 * N_ed * 10 ** -3 / (eta1 * fcd * b)
+x = round(float(1) / lambda_bet * n_ed * 10 ** -3 / (eta_bet * f_cd * b), 4)
 
 print(x)
 
 # Pierwszy  warunek
 
 if x <= x_lim:
-    sigma_s1 = fyd
+    sigma_s1 = f_yd
 
     if x < x_min_yd:
-        A = lambda1 * (fyd - Epsilon_cu3 * Es)
-        B = -2 * (fyd * d - Epsilon_cu3 * Es * a2 * (1 + 0.5 * lambda1))
-        C = 2 * ((N_ed * 10 ** -3 * (fyd * e_s1 - Epsilon_cu3 * Es * e_s2) / (lambda1 * eta1 * fcd * b)) - (
-                Epsilon_cu3 * Es * a2 ** 2))
-        D = ((2 * N_ed * 10 ** -3 * Epsilon_cu3 * Es * a2 * e_s2) / (lambda1 * eta1 * fcd * b))
+        A = round(lambda_bet * (f_yd - epsilon_cu3 * es), 4)
+        B = round(-2 * (f_yd * d - epsilon_cu3 * es * a2 * (1 + 0.5 * lambda_bet)), 4)
+        C = round(2 * (((n_ed * 10 ** -3 * (f_yd * e_s1 - epsilon_cu3 * es * e_s2)) / (lambda_bet * eta_bet * f_cd * b))
+                       - (epsilon_cu3 * es * a2 ** 2)), 4)
+        D = round(((2 * n_ed * 10 ** -3 * epsilon_cu3 * es * a2 * e_s2) / (lambda_bet * eta_bet * f_cd * b)), 4)
+
+        print(str(A) + " A")
+        print(str(B) + " B")
+        print(str(C) + " C")
+        print(str(D) + " D")
+
+        solution = [A, B, C, D]
+        np.roots(solution)
+
+        print(min([n for n in np.roots(solution) if n > 0]))
+        x = min([n for n in np.roots(solution) if n > 0])
+
+        if x <= x_min_minus_yd:
+            sigma_s2 = -f_yd
+
+            x = round(1 / (2 * lambda_bet) * (
+                    (d + a2) - np.sqrt((d + a2) ** 2 -
+                                       (4 * n_ed * 10 ** -3 * (e_s1 + e_s2)) / (eta_bet * f_cd * b))), 4)
+        else:
+            sigma_s2 = round(epsilon_cu3 * (x - a2) / x * es, 4)
+
+    else:
+        sigma_s2 = f_yd
+
+else:
+    sigma_s2 = f_yd
+    A = round(lambda_bet * (f_yd + epsilon_cu3 * es), 4)
+    B = round(-2 * (f_yd * a2 + epsilon_cu3 * es * d * (1 + 0.5 * lambda_bet)), 4)
+    C = round(2 * ((n_ed * 10 ** -3 * (f_yd * e_s2 + epsilon_cu3 * es * e_s1) / (lambda_bet * eta_bet * f_cd * b)) -
+                   (epsilon_cu3 * es * d ** 2)), 4)
+    D = round(-((2 * n_ed * 10 ** -3 * epsilon_cu3 * es * d * e_s1) / (lambda_bet * eta_bet * f_cd * b)), 4)
+    print(A)
+    print(B)
+    print(C)
+    print(D)
+
+    solution = [A, B, C, D]
+    np.roots(solution)
+
+    print(min([n for n in np.roots(solution) if n > 0]))
+    x = min([n for n in np.roots(solution) if n > 0])
+
+    if x > h:
+        A = round(lambda_bet * (f_yd + epsilon_c3 * es), 4)
+        B = round(-2 * (f_yd * (a2 + 0.5 * lambda_bet * x_0) + epsilon_c3 * es * d * (1 + 0.5 * lambda_bet)), 4)
+        C = round(2 * ((n_ed * 10 ** -3 * (f_yd * e_s2 + epsilon_c3 * es * e_s1)) / (
+                lambda_bet * eta_bet * f_cd * b) + epsilon_c3 * es * d ** 2 + f_yd * a2 * x_0), 4)
+        D = round(-((2 * n_ed * 10 ** -3) / (lambda_bet * eta_bet * f_cd * b) *
+                    (epsilon_c3 * es * d * e_s1 + f_yd * x_0 * e_s2)), 4)
 
         print(A)
         print(B)
@@ -83,27 +138,42 @@ if x <= x_lim:
         print(min([n for n in np.roots(solution) if n > 0]))
         x = min([n for n in np.roots(solution) if n > 0])
 
-        if x <= x_min_minus_yd:
-            sigma_s2 = -fyd
+        if x > h / lambda_bet:
+            F1 = round(n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * h * (0.5 * h - a1), 4)
+            F2 = round(n_ed * 10 ** -3 * e_s2 - eta_bet * f_cd * b * h * (0.5 * h - a2), 4)
 
-            x = 1 / (2 * lambda1) * ((d + a2) - np.sqrt((d + a2) ** 2 - (4 * N_ed * (e_s1 + e_s2)) / (eta1 * fcd * b)))
+            x = round((epsilon_c3 * es * d * F1 + f_yd * x_0 * F2) / (epsilon_c3 * es * F1 + f_yd * F2), 4)
+
+            if h / lambda_bet <= x <= x_max_yd:
+                sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 4)
+
+            else:
+                F1 = round(n_ed * 10 ** -3 * (e_s1 * d + e_s2 * a2) + eta_bet * f_cd * b * h * 0.5 * (
+                        (a1 - a2) * (d + a2) - (d - a2) ** 2), 4)
+                F2 = round(n_ed * 10 ** -3 * (e_s1 + e_s2) + eta_bet * f_cd * b * h * (a1 - a2), 4)
+
+                x = round(F1 / F2, 4)
+
+                sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 4)
+                sigma_s2 = round(epsilon_c3 * (x - a2) / (x - x_0) * es, 4)
+
         else:
-            sigma_s2 = Epsilon_cu3 * (x - a2) / x * Es
+            sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 4)
 
+            if x <= h / lambda_bet:
+                x = x
+            else:
+                x = h / lambda_bet
 
     else:
-        sigma_s2 = fyd
-
-
-else:
-    sigma_s2 = fyd
-    sigma_s1 = fyd
-
+        sigma_s1 = round(epsilon_cu3 * (d - x) / x * es, 4)
 
 print(sigma_s2)
 
-As_1 = (N_ed * 10 ** -3 * e_s2 + eta1 * fcd * b * lambda1 * x * (0.5 * lambda1 * x - a2)) / (sigma_s1 * (d - a2))*10**4 #10^4 - konwersja z m2 na cm2
+As_1 = round((n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
+        sigma_s1 * (d - a2)) * 10 ** 4, 4)  # 10^4 - konwersja z m2 na cm2
 print(str(As_1) + " [cm^2]")
 
-As_2 = (N_ed * 10 ** -3 * e_s1 - eta1 * fcd * b * lambda1 * x * (d - 0.5 * lambda1 * x)) / (sigma_s2 * (d - a2))*10**4
+As_2 = round((n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
+        sigma_s2 * (d - a2)) * 10 ** 4, 4)
 print(str(As_2) + " [cm^2]")
