@@ -1,2 +1,2 @@
 # zelbet
-# this program is to help with concrete pillars
+# This project is created to learn python basics and also to calculate concrete reinforcment.
