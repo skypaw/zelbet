@@ -3,27 +3,30 @@
 
 import numpy as np
 
-def x_solution(A, B, C, D):
-    solution = [A, B, C, D]
+
+def x_solution(a_func, b_func, c_func, d_func):
+    solution = [a_func, b_func, c_func, d_func]
 
     results = [np.roots(solution)]
-    for i in results:
+    res=[]
+    for i in results[0]:
         if i.imag == 0.0:
             res.append(i)
 
-    x = min([n for n in np.roots(solution) if n > 0])
-    return x
+    x_function = min([n for n in res if n > 0])
+    return x_function, res
 
-print("Projektowanie zbrojenia symetrycznego\n") #symmetrical reinforcment
 
-f_yd = float(input("Obliczeniowa granica plastyczności stali [MPa]: ")) #
+print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
+
+f_yd = float(input("Obliczeniowa granica plastyczności stali [MPa]: "))
 es = float(input("Granica sprężystości stali [GPa]: ")) * 10 ** 3
 
-#todo: add table with concrete strengh, to choose which we want to use, yet idk how
+# to do: add table with concrete strengh, to choose which we want to use, yet idk how
 
 lambda_bet = float(0.8)
 eta_bet = float(1)
-f_cd = float(17.9) #const concrete C25/30
+f_cd = float(17.9)  # const concrete C25/30
 
 # const
 
@@ -33,19 +36,19 @@ epsilon_c3 = float(0.00175)
 print(f"Obliczeniowa granica plastyczności stali {f_yd} [MPa]")
 print(f"Moduł Younga {es} [MPa]")
 
-#dimensions
+# dimensions
 
-a1 = float(input("Wartość otuliny a1 [mm]: ")) * float(10 ** -3)
-a2 = float(input("Wartość otuliny a2 [mm]: ")) * float(10 ** -3)
-h = float(input("Wysokość przekroju [cm]: ")) * float(10 ** -2)
-b = float(input("Szerokość przekroju [cm]: ")) * float(10 ** -2)
+a1 = float(input("Wartość otuliny a1 [mm]: ")) * 10 ** -3
+a2 = float(input("Wartość otuliny a2 [mm]: ")) * 10 ** -3
+h = float(input("Wysokość przekroju [cm]: ")) * 10 ** -2
+b = float(input("Szerokość przekroju [cm]: ")) * 10 ** -2
 
 d = round(h - a1, 4)
 
 print(f"Wysokość użyteczna przekroju [m] {d}")
 
 
-#eccentricity
+# eccentricity
 
 m_ed = float(input("Wielkość momentu w przekroju: "))
 n_ed = float(input("Wielkość siły normalnej w przekroju: "))
@@ -59,9 +62,9 @@ print(f"Mimośród e = {e} [m]")
 print(f"Mimośród e_s1 = {e_s1} [m]")
 print(f"Mimośród e_s2 = {e_s2} [m]")
 
-#calculations
+# calculations
 
-x_lim = round((epsilon_cu3 * d) / (epsilon_cu3 + f_yd / es), 4) #till next hash, class maybe(?)
+x_lim = round((epsilon_cu3 * d) / (epsilon_cu3 + f_yd / es), 4)  # till next hash, class maybe(?)
 Epsilon_yd = float(f_yd / es)
 
 x_min_minus_yd = round((epsilon_cu3 * a2) / (epsilon_cu3 + f_yd / es), 4)
@@ -97,8 +100,10 @@ if x <= x_lim:
         print(f"C = {C}")
         print(f"D = {D}")
 
-        x_solution(A, B, C, D)
+        x, result = x_solution(A, B, C, D)
         print(f"x {x}")
+        print(result)
+
 
         if x <= x_min_minus_yd:
             sigma_s2 = -f_yd
@@ -126,7 +131,8 @@ else:
     print(f"C = {C}")
     print(f"D = {D}")
 
-    x_solution(A, B, C, D)
+    x, result = x_solution(A, B, C, D)
+    print(result)
     print(f"x {x}")
 
     if x > h:
@@ -142,7 +148,8 @@ else:
         print(f"C = {C}")
         print(f"D = {D}")
 
-        x_solution(A, B, C, D)
+        x, result = x_solution(A, B, C, D)
+        print(result)
         print(f"x {x}")
 
         if x > h / lambda_bet:
@@ -186,5 +193,4 @@ print(f"As1 = {As_1} [cm^2]")
 
 As_2 = round((n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
         sigma_s2 * (d - a2)) * 10 ** 4, 4)
-print(f"As2 = {As_2} [cm^2]") #As1 & As2 should be similar
-
+print(f"As2 = {As_2} [cm^2]")  # As1 & As2 should be similar
