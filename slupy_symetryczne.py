@@ -8,7 +8,6 @@ from slupy_functions import start_parameters
 from slupy_functions import const_parameters
 from slupy_functions import eccentricity
 
-
 print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
 
 f_yd = float(input("Obliczeniowa granica plastyczności stali [MPa]: "))
@@ -16,8 +15,8 @@ es = float(input("Granica sprężystości stali [GPa]: ")) * 10 ** 3
 
 # to do: add table with concrete strengh, to choose which we wan-t to use, yet idk how
 
-lambda_bet = float(0.8)
-eta_bet = float(1)
+lambda_bet = float(0.8)  # not a const, basicallv it deepends of kind of concrete
+eta_bet = float(1)  # like line above
 f_cd = float(17.9)  # const concrete C25/30
 
 # const
@@ -35,10 +34,6 @@ a2 = float(input("Wartość otuliny a2 [mm]: ")) * 10 ** -3
 h = float(input("Wysokość przekroju [cm]: ")) * 10 ** -2
 b = float(input("Szerokość przekroju [cm]: ")) * 10 ** -2
 
-d = round(h - a1, 4)
-
-print(f"Wysokość użyteczna przekroju [m] {d}")
-
 # eccentricity
 
 m_ed = float(input("Wielkość momentu w przekroju: "))
@@ -52,16 +47,17 @@ print(f"Mimośród e_s2 = {e_s2} [m]")
 
 # calculations
 
-x_lim, epsilon_yd, x_min_minus_yd, x_min_yd, x_0, x_max_yd = start_parameters(epsilon_cu3, epsilon_c3,
-                                                                              f_yd, es, a2, h, d)
+x_lim, epsilon_yd, x_min_minus_yd, x_min_yd, x_0, x_max_yd, d = start_parameters(epsilon_cu3, epsilon_c3,
+                                                                                 f_yd, es, a2, a1, h)
 
+print(f"Wysokość użyteczna przekroju [m] {d}")
 print(f"x_lim {x_lim}")
 print(f"x_min_minus_yd {x_min_minus_yd}")
 print(f"x_min_yd {x_min_yd}")
 print(f"x_0 {x_0}")
 print(f"x_max_yd {x_max_yd}")
 
-x = round(float(1) / lambda_bet * n_ed * 10 ** -3 / (eta_bet * f_cd * b), 4)
+x = round(1 / lambda_bet * n_ed * 10 ** -3 / (eta_bet * f_cd * b), 4)
 
 print(f"x {x}")
 
@@ -165,10 +161,10 @@ else:
     else:
         sigma_s1 = round(epsilon_cu3 * (d - x) / x * es, 4)
 
-As_1 = round((n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
+as_1 = round((n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
         sigma_s1 * (d - a2)) * 10 ** 4, 4)  # 10^4 - converion z m2 na cm2
-print(f"As1 = {As_1} [cm^2]")
+print(f"As1 = {as_1} [cm^2]")
 
-As_2 = round((n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
+as_2 = round((n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
         sigma_s2 * (d - a2)) * 10 ** 4, 4)
-print(f"As2 = {As_2} [cm^2]")  # As1 & As2 should be similar
+print(f"As2 = {as_2} [cm^2]")  # As1 & As2 should be similar
