@@ -1,19 +1,54 @@
+# coding=utf-8
+# http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_6.pdf
+
 import numpy as np
 
 from slupy_functions import x_solution
 from slupy_functions import start_parameters
 from slupy_functions import const_parameters
+from slupy_functions import eccentricity
 
-print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
+
+def x_niesymetryczny(lambda_bet_func, d_func, n_ed_func, e_s1_func, sigma_s2_func, as2_func, a2_func, eta_bet_func,
+                     f_cd_func, b_func):
+    x_func = round(1 / lambda_bet_func * (d_func - np.sqrt(
+        d_func ** 2 - (2 * (n_ed_func * 10 ** -3 * e_s1_func - sigma_s2_func * as2_func * (d_func - a2_func))) /
+        (eta_bet_func * f_cd_func * b_func))), 4)
+
+    return x_func
+
+
+def sigma_func(epsilon_cu3_func, es_func, x_func, a2_func):
+    sigma_s2_func = (epsilon_cu3_func * es_func) * (x_func - a2_func) / x_func
+    return sigma_s2_func
+
+
+def abc_func(a2_d_func, a2_d_func_rev, lambda_bet_func, n_ed_func, es_func, m_s_function, eta_bet_func, f_cd_func,
+             b_func):
+    a_function = -2 * a2_d_func / lambda_bet_func
+    b_function = (2 * (n_ed_func * 10 ** -3 * es_func + m_s_function)) / (
+                lambda_bet_func ** 2 * eta_bet_func * f_cd_func * b_func)
+    c_function = (-2 * a2_d_func_rev * m_s_function) / (lambda_bet_func ** 2 * eta_bet_func * f_cd_func * b_func)
+    return a_function, b_function, c_function
+
+
+def m_s_func(e_cu_cu3, es_func, as_1_2_min, d_func, a2_func):
+    m_s = e_cu_cu3 * es_func * as_1_2_min * (d_func - a2_func)
+    return m_s
+
+
+print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcement
 
 f_yd = float(input("Obliczeniowa granica plastyczności stali [MPa]: "))
 es = float(input("Granica sprężystości stali [GPa]: ")) * 10 ** 3
 
 # to do: add table with concrete strengh, to choose which we wan-t to use, yet idk how
 
-lambda_bet = float(0.8)
-eta_bet = float(1)
-f_cd = float(17.9)  # const concrete C25/30
+lambda_bet = float(0.8)  # not a const, basicallv it depends of kind of concrete
+eta_bet = float(1)  # like line above
+f_cd = float(17.9)  # const for concrete C25/30
+f_yk = float(500)
+f_ctm = float(2.6)
 
 # const
 
@@ -30,10 +65,6 @@ a2 = float(input("Wartość otuliny a2 [mm]: ")) * 10 ** -3
 h = float(input("Wysokość przekroju [cm]: ")) * 10 ** -2
 b = float(input("Szerokość przekroju [cm]: ")) * 10 ** -2
 
-d = round(h - a1, 4)
-
-print(f"Wysokość użyteczna przekroju [m] {d}")
-
 # eccentricity
 
 m_ed = float(input("Wielkość momentu w przekroju: "))
@@ -47,11 +78,157 @@ print(f"Mimośród e_s2 = {e_s2} [m]")
 
 # calculations
 
-x_lim, epsilon_yd, x_min_minus_yd, x_min_yd, x_0, x_max_yd = start_parameters(epsilon_cu3, epsilon_c3,
-                                                                              f_yd, es, a2, h, d)
+x_lim, epsilon_yd, x_min_minus_yd, x_min_yd, x_0, x_max_yd, d = start_parameters(epsilon_cu3, epsilon_c3,
+                                                                                 f_yd, es, a2, a1, h)
 
+print(f"Wysokość użyteczna przekroju [m] {d}")
 print(f"x_lim {x_lim}")
 print(f"x_min_minus_yd {x_min_minus_yd}")
 print(f"x_min_yd {x_min_yd}")
 print(f"x_0 {x_0}")
 print(f"x_max_yd {x_max_yd}")
+
+x = x_lim
+sigma_s2 = sigma_func(epsilon_cu3, es, x, a2)
+
+if sigma_s2 <= f_yd:
+    sigma_s2 = sigma_s2
+else:
+    sigma_s2 = f_yd
+
+as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
+            sigma_s2 * (d - a2))
+
+as_min = round(max(0.26 * (f_ctm / f_yk) * b * d, 0.0013 * b * d), 8)
+
+as2_min = 0.5 * as_min
+as1_min = 0.5 * as_min
+
+print(as_min)
+print(f"x {x}")
+print(f"sigma_s2 {sigma_s2}")
+
+if as2 <= as2_min:
+    as2 = as2_min
+    x = x_niesymetryczny(lambda_bet, d, n_ed, e_s1, sigma_s2, as2, a2, eta_bet, f_cd, b)
+
+    if x < x_min_yd:
+        m_s2 = m_s_func(epsilon_cu3, es, as2_min, d, a2)
+        print(m_s2)
+
+        A, B, C = abc_func(d, a2, lambda_bet, n_ed, e_s1, -m_s2, eta_bet, f_cd, b)
+        print(A)
+        print(B)
+        print(C)
+
+        x, result = x_solution(1, A, B, C)
+        print(f"x {x}")
+        print(result)
+
+        if x <= x_min_minus_yd:
+            sigma_s2 = -f_yd
+            x = x_niesymetryczny(lambda_bet, d, n_ed, e_s1, sigma_s2, as2, a2, eta_bet, f_cd, b)
+        else:
+            sigma_s2 = sigma_func(epsilon_cu3, es, x, a2)
+
+
+    else:
+        sigma_s2 = f_yd
+
+    as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3) / f_yd * 10 ** 4
+    as2 = as2 * 10 ** 4
+
+    print(f"As1 = {as1}")
+    print(f"As2 = {as2}")
+    exit()
+
+else:
+    as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3)
+    if as1 < 0:
+        as1 = as1_min
+        m_s1 = m_s_func(epsilon_cu3, es, as1, d, a2)
+        print(f"m_s1 {m_s1}")
+
+        A, B, C = abc_func(a2, d, lambda_bet, n_ed, e_s2, m_s1, eta_bet, f_cd, b)
+        print(A)
+        print(B)
+        print(C)
+
+        x, result = x_solution(1, A, B, C)
+        print(f"x {x}")
+        print(result)
+
+        if x > h:
+            m_s2 = m_s_func(epsilon_c3, es, as1, d, a2)
+
+            A = -(x_0 + (2 * a2) / lambda_bet)
+            B = 2 * (((n_ed * 10 ** -3 * e_s2 + m_s2) / lambda_bet ** 2 * eta_bet * f_cd * b) + (
+                        (a2 / lambda_bet) * x_0))
+            C = (-2 * (n_ed * 10 ** -3 * e_s2 * x_0 + d * m_s2)) / (lambda_bet ** 2 * eta_bet * f_cd * b)
+
+            x, result = x_solution(1, A, B, C)
+            print(f"x {x}")
+            print(result)
+
+            if x > h / lambda_bet:
+                f1 = (-n_ed * 10 ** -3 * e_s2 - eta_bet * f_cd * b * h * (0.5 * h - a2)) * (
+                            d - x_0)  # zrobić z tego funkcje
+                f2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * h * (0.5 * h - a1)) * (x_0 - a2)
+
+                if f2 - f1 > 0:
+                    x = (-f1 * a2 + f2 * d + np.sqrt(f1 * f2) * (d - a2)) / (f2 - f1)
+                    if x >= x_max_yd:
+                        x = x
+                    else:
+                        x = x_max_yd
+
+                    sigma_s1 = epsilon_c3 * (d - x) / (x - x_0) * es
+                    if sigma_s1 <= f_yd:
+                        sigma_s1 = sigma_s1
+                    else:
+                        sigma_s1 = f_yd
+
+                    sigma_s2 = epsilon_c3 * (x - a2) / (x - x_0) * es
+                    if sigma_s2 <= f_yd:
+                        sigma_s2 = sigma_s2
+                    else:
+                        sigma_s2 = f_yd
+
+                    as1 = (n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * h * (0.5 * h - a2)) / (sigma_s1 * (d - a2)) * 10 ** 4
+                    as2 = (n_ed * 10 ** -3 * e_s1 + eta_bet * f_cd * b * h * (0.5 * h - a1)) / (sigma_s2 * (d - a2)) * 10 ** 4
+                    print(f"As1 = {as1}")
+                    print(f"As2 = {as2}")
+                    exit()
+
+                else:
+                    x = 10 ** 10  # powtórzenie kodu, robić z tego funkcje?
+
+                    sigma_s1 = epsilon_c3 * (d - x) / (x - x_0) * es
+                    if sigma_s1 <= f_yd:
+                        sigma_s1 = sigma_s1
+                    else:
+                        sigma_s1 = f_yd
+
+                    sigma_s2 = epsilon_c3 * (x - a2) / (x - x_0) * es
+                    if sigma_s2 <= f_yd:
+                        sigma_s2 = sigma_s2
+                    else:
+                        sigma_s2 = f_yd
+
+                    as1 = (n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * h * (0.5 * h - a2)) / (sigma_s1 * (d - a2)) * 10 ** 4
+                    as2 = (n_ed * 10 ** -3 * e_s1 + eta_bet * f_cd * b * h * (0.5 * h - a1)) / (sigma_s2 * (d - a2)) * 10 ** 4
+                    print(f"As1 = {as1}")
+                    print(f"As2 = {as2}")
+                    exit()
+
+            else:
+                as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
+                            f_yd * (d - a2)) * 10 ** 4
+        else:
+            as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
+                        f_yd * (d - a2)) * 10 ** 4
+    else:
+        as1 = as1  * 10 ** 4
+
+print(f"As1 = {as1}")
+print(f"As2 = {as2}")
