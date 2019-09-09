@@ -2,211 +2,99 @@ from tkinter import *
 import slupy_symetryczne
 import slupy_niesymetryczne
 import slupy_diagnostyka
-
-def zbroj_sym():
-
-
-    opis_tytul = Label(ramka, text="Zbrojenie symetryczne")
-    opis_1 = Label(ramka, text="Wysokość przekroju h [cm]")
-    opis_2 = Label(ramka, text="Szerokość przekroju b [cm]")
-    opis_3 = Label(ramka, text="Odległość a1 [mm]")
-    opis_4 = Label(ramka, text="Odległość a2 [mm]")
-    opis_5 = Label(ramka, text="Obliczeniowa wartość momentu zginającego [kNm]")
-    opis_6 = Label(ramka, text="Obliczeniowa wartość siły normalnej [kN]")
-
-    dane_1 = Entry(ramka, width=6)
-    dane_2 = Entry(ramka, width=6)
-    dane_3 = Entry(ramka, width=6)
-    dane_4 = Entry(ramka, width=6)
-    dane_5 = Entry(ramka, width=6)
-    dane_6 = Entry(ramka, width=6)
-
-    ramka.pack(side=LEFT)
+import slupy_functions
 
 
-    opis_tytul.grid(row=0, columnspan=2)
-    opis_1.grid(row=1, sticky=E)
-    opis_2.grid(row=2, sticky=E)
-    opis_3.grid(row=3, sticky=E)
-    opis_4.grid(row=4, sticky=E)
-    opis_5.grid(row=5, sticky=E)
-    opis_6.grid(row=6, sticky=E)
+class menu:
+    def __init__(self, master):
+        menu_bg = Label(master, bg="#003366", fg="white")
+        self.button1 = Button(menu_bg, text="Zbrojenie symetryczne", command=lambda: self.onclick(1, master))
+        self.button2 = Button(menu_bg, text="Zbrojenie niesymetryczne", command=lambda: self.onclick(2, master))
+        self.button3 = Button(menu_bg, text="Diagnostyka")
 
-    dane_1.grid(row=1, column=1)
-    dane_2.grid(row=2, column=1)
-    dane_3.grid(row=3, column=1)
-    dane_4.grid(row=4, column=1)
-    dane_5.grid(row=5, column=1)
-    dane_6.grid(row=6, column=1)
+        menu_bg.pack()
+        self.button1.pack()
+        self.button2.pack()
+        self.button3.pack()
 
-    def clicked():
-
-        obliczenia.pack(side=LEFT, fill=X)
-
-        h = float(dane_1.get().replace(',', '.')) * 10 ** -2
-        b = float(dane_2.get().replace(',', '.')) * 10 ** -2
-        a1 = float(dane_3.get().replace(',', '.')) * 10 ** -3
-        a2 = float(dane_4.get().replace(',', '.')) * 10 ** -3
-        m_ed = float(dane_5.get().replace(',', '.'))
-        n_ed = float(dane_6.get().replace(',', '.'))
-
-        as1, as2 =slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed)
-
-        wynik_1 = Label(obliczenia, text=f"A_s1 = {as1} [cm^2]")
-        wynik_1.grid(row=8, sticky=E)
-        wynik_2 = Label(obliczenia, text=f"A_s2 = {as2} [cm^2]")
-        wynik_2.grid(row=9, sticky=E)
+    def onclick(self, args, master):
+        if args == 1:
+            zbrojenie_symetryczne(master)
+        if args == 2:
+            zbrojenie_niesymetryczne(master)
 
 
+class zbrojenie_symetryczne:
+    def __init__(self, master):
+        self.zbrojenie_bg = Label(master)
 
-    button5 = Button(ramka, text="Obliczenia", command=clicked)
-    button5.grid(row=7, columnspan=2, pady=10)
+        self.opis_1 = Label(self.zbrojenie_bg, text="Wysokość przekroju h [cm]")
+        self.opis_2 = Label(self.zbrojenie_bg, text="Szerokość przekroju b [cm]")
+        self.opis_3 = Label(self.zbrojenie_bg, text="Odległość a1 [mm]")
+        self.opis_4 = Label(self.zbrojenie_bg, text="Odległość a2 [mm]")
+        self.opis_5 = Label(self.zbrojenie_bg, text="Obliczeniowa wartość momentu zginającego [kNm]")
+        self.opis_6 = Label(self.zbrojenie_bg, text="Obliczeniowa wartość siły normalnej [kN]")
+        self.opis_7 = Label(self.zbrojenie_bg, text="Wybór betonu")
 
+        self.dane_1 = Entry(self.zbrojenie_bg, width=6)
+        self.dane_2 = Entry(self.zbrojenie_bg, width=6)
+        self.dane_3 = Entry(self.zbrojenie_bg, width=6)
+        self.dane_4 = Entry(self.zbrojenie_bg, width=6)
+        self.dane_5 = Entry(self.zbrojenie_bg, width=6)
+        self.dane_6 = Entry(self.zbrojenie_bg, width=6)
 
-def zbroj_niesym():  # XD "end" have to do smth with that, maybe function again 
+        var = StringVar()
+        var.set("Wybierz klasę")
+        self.dane_7 = OptionMenu(self.zbrojenie_bg, var, "C12","C16","C20","C25","C30","C35","C40","C45","C50","C55","C60","C70","C80","C90", command=self.option_menu)
 
+        self.zbrojenie_bg.pack(side=RIGHT)
+        self.opis_1.grid(row=1, sticky=E)
+        self.opis_2.grid(row=2, sticky=E)
+        self.opis_3.grid(row=3, sticky=E)
+        self.opis_4.grid(row=4, sticky=E)
+        self.opis_5.grid(row=5, sticky=E)
+        self.opis_6.grid(row=6, sticky=E)
+        self.opis_7.grid(row=7, sticky=E)
 
-    opis_tytul = Label(ramka, text="Zbrojenie niesymetryczne")
-    opis_1 = Label(ramka, text="Wysokość przekroju h [cm]")
-    opis_2 = Label(ramka, text="Szerokość przekroju b [cm]")
-    opis_3 = Label(ramka, text="Odległość a1 [mm]")
-    opis_4 = Label(ramka, text="Odległość a2 [mm]")
-    opis_5 = Label(ramka, text="Obliczeniowa wartość momentu zginającego [kNm]")
-    opis_6 = Label(ramka, text="Obliczeniowa wartość siły normalnej [kN]")
+        self.dane_1.grid(row=1, column=1)
+        self.dane_2.grid(row=2, column=1)
+        self.dane_3.grid(row=3, column=1)
+        self.dane_4.grid(row=4, column=1)
+        self.dane_5.grid(row=5, column=1)
+        self.dane_6.grid(row=6, column=1)
+        self.dane_7.grid(row=7, column=1)
 
-    dane_1 = Entry(ramka, width=6)
-    dane_2 = Entry(ramka, width=6)
-    dane_3 = Entry(ramka, width=6)
-    dane_4 = Entry(ramka, width=6)
-    dane_5 = Entry(ramka, width=6)
-    dane_6 = Entry(ramka, width=6)
+        self.button5 = Button(self.zbrojenie_bg, text="Obliczenia", command=self.onclick)
+        self.button5.grid(row=10, columnspan=2, pady=10)
 
-    ramka.pack(side=LEFT)
-
-
-    opis_tytul.grid(row=0, columnspan=2)
-    opis_1.grid(row=1, sticky=E)
-    opis_2.grid(row=2, sticky=E)
-    opis_3.grid(row=3, sticky=E)
-    opis_4.grid(row=4, sticky=E)
-    opis_5.grid(row=5, sticky=E)
-    opis_6.grid(row=6, sticky=E)
-
-    dane_1.grid(row=1, column=1)
-    dane_2.grid(row=2, column=1)
-    dane_3.grid(row=3, column=1)
-    dane_4.grid(row=4, column=1)
-    dane_5.grid(row=5, column=1)
-    dane_6.grid(row=6, column=1)
-
-    def clicked():
-
-        obliczenia.pack(side=LEFT, fill=X)
-
-        h = float(dane_1.get().replace(',', '.')) * 10 ** -2
-        b = float(dane_2.get().replace(',', '.')) * 10 ** -2
-        a1 = float(dane_3.get().replace(',', '.')) * 10 ** -3
-        a2 = float(dane_4.get().replace(',', '.')) * 10 ** -3
-        m_ed = float(dane_5.get().replace(',', '.'))
-        n_ed = float(dane_6.get().replace(',', '.'))
-
-        as1, as2 =slupy_niesymetryczne.main(h, b, a1, a2, m_ed, n_ed)
-
-        wynik_1 = Label(obliczenia, text=f"A_s1 = {as1} [cm^2]")
-        wynik_1.grid(row=8, sticky=E)
-        wynik_2 = Label(obliczenia, text=f"A_s2 = {as2} [cm^2]")
-        wynik_2.grid(row=9, sticky=E)
+    def option_menu(self, selection):
+        self.eta_bet, self.lambda_bet, self.f_cd = slupy_functions.calculated_value_concrete(selection)
+        print(self.eta_bet, self.lambda_bet, self.f_cd)
 
 
+    def onclick(self):
 
-    button5 = Button(ramka, text="Obliczenia", command=clicked)
-    button5.grid(row=7, columnspan=2, pady=10)
+        h = float(self.dane_1.get().replace(',', '.')) * 10 ** -2
+        b = float(self.dane_2.get().replace(',', '.')) * 10 ** -2
+        a1 = float(self.dane_3.get().replace(',', '.')) * 10 ** -3
+        a2 = float(self.dane_4.get().replace(',', '.')) * 10 ** -3
+        m_ed = float(self.dane_5.get().replace(',', '.'))
+        n_ed = float(self.dane_6.get().replace(',', '.'))
 
-def diagnostyka():
+        as1, as2 =slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
 
-
-    opis_tytul = Label(ramka, text="Diagnostyka")
-    opis_1 = Label(ramka, text="Wysokość przekroju h [cm]")
-    opis_2 = Label(ramka, text="Szerokość przekroju b [cm]")
-    opis_3 = Label(ramka, text="Odległość a1 [mm]")
-    opis_4 = Label(ramka, text="Odległość a2 [mm]")
-    opis_5 = Label(ramka, text="Obliczeniowa wartość momentu zginającego [kNm]")
-    opis_6 = Label(ramka, text="Obliczeniowa wartość siły normalnej [kN]")
-    opis_7 = Label(ramka, text="Przyjęte zbrojenie As_1 [cm^2]")
-    opis_8 = Label(ramka, text="Przyjęte zbrojenie As_2 [cm^2]")
-
-    dane_1 = Entry(ramka, width=6)
-    dane_2 = Entry(ramka, width=6)
-    dane_3 = Entry(ramka, width=6)
-    dane_4 = Entry(ramka, width=6)
-    dane_5 = Entry(ramka, width=6)
-    dane_6 = Entry(ramka, width=6)
-    dane_7 = Entry(ramka, width=6)
-    dane_8 = Entry(ramka, width=6)
-
-    ramka.pack(side=LEFT)
+        self.wynik_1 = Label(self.zbrojenie_bg, text=f"A_s1 = {as1} [cm^2]")
+        self.wynik_1.grid(row=8, sticky=E)
+        self.wynik_2 = Label(self.zbrojenie_bg, text=f"A_s2 = {as2} [cm^2]")
+        self.wynik_2.grid(row=9, sticky=E)
 
 
-    opis_tytul.grid(row=0, columnspan=2)
-    opis_1.grid(row=1, sticky=E)
-    opis_2.grid(row=2, sticky=E)
-    opis_3.grid(row=3, sticky=E)
-    opis_4.grid(row=4, sticky=E)
-    opis_5.grid(row=5, sticky=E)
-    opis_6.grid(row=6, sticky=E)
-    opis_7.grid(row=7, sticky=E)
-    opis_8.grid(row=8, sticky=E)
-
-    dane_1.grid(row=1, column=1)
-    dane_2.grid(row=2, column=1)
-    dane_3.grid(row=3, column=1)
-    dane_4.grid(row=4, column=1)
-    dane_5.grid(row=5, column=1)
-    dane_6.grid(row=6, column=1)
-    dane_7.grid(row=7, column=1)
-    dane_8.grid(row=8, column=1)
-
-    def clicked():
-
-        obliczenia.pack(side=LEFT, fill=X)
-
-        h = float(dane_1.get().replace(',', '.')) * 10 ** -2
-        b = float(dane_2.get().replace(',', '.')) * 10 ** -2
-        a1 = float(dane_3.get().replace(',', '.')) * 10 ** -3
-        a2 = float(dane_4.get().replace(',', '.')) * 10 ** -3
-        m_ed = float(dane_5.get().replace(',', '.'))
-        n_ed = float(dane_6.get().replace(',', '.'))
-        a_s1 = float(dane_7.get().replace(',', '.')) * 10 ** -4
-        a_s2 = float(dane_8.get().replace(',', '.')) * 10 ** -4
-
-        m_rd, n_rd =slupy_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2)
-
-        wynik_1 = Label(obliczenia, text=f"Med = {m_rd} [cm^2]")
-        wynik_1.grid(row=8, sticky=E)
-        wynik_2 = Label(obliczenia, text=f"Ned = {n_rd} [cm^2]")
-        wynik_2.grid(row=9, sticky=E)
-
-
-
-    button5 = Button(ramka, text="Obliczenia", command=clicked)
-    button5.grid(row=10, columnspan=2, pady=10)
 
 
 
 root = Tk()
+root.title("Obliczanie zbrojenia")
 
-menu = Label(root, bg="#003366", fg="white")
-menu.pack(side=LEFT, fill=Y)
-ramka = Frame(root, padx=20, pady=10)
-obliczenia = Frame(root)
-
-
-button1 = Button(menu, text="Zbrojenie symetryczne", command=zbroj_sym)
-button2 = Button(menu, text="Zbrojenie niesymetryczne", command=zbroj_niesym)
-button3 = Button(menu, text="Diagnostyka", command=diagnostyka)
-
-button1.pack()
-button2.pack()
-button3.pack()
+menu_pack = menu(root)
 
 root.mainloop()

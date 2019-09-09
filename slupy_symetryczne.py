@@ -3,16 +3,10 @@
 from slupy_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed):
+def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
 
     # to do: add table with concrete strengh, to choose which we wan-t to use, yet idk how
-
-    lambda_bet = float(0.8)  # not a const, basicallv it deepends of kind of concrete
-    eta_bet = float(1)  # like line above
-    f_cd = float(17.9)  # const concrete C25/30
-
-    # const
 
     epsilon_cu3 = const_parameters[0]
     epsilon_c3 = const_parameters[1]
@@ -27,6 +21,9 @@ def main(h, b, a1, a2, m_ed, n_ed):
     print(a2)
     print(m_ed)
     print(n_ed)
+    print(lambda_bet)
+    print(eta_bet)
+    print(f_cd)
 
     e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
 
@@ -150,6 +147,9 @@ def main(h, b, a1, a2, m_ed, n_ed):
 
         else:
             sigma_s1 = round(epsilon_cu3 * (d - x) / x * es, 4)
+
+    print(f"Sigma s1 = {sigma_s1}")
+    print(f"Sigma s2 = {sigma_s2}")
 
     as_1 = round((n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
             sigma_s1 * (d - a2)) * 10 ** 4, 4)  # 10^4 - converion z m2 na cm2
