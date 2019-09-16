@@ -6,8 +6,6 @@ from slupy_functions import *
 def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
 
-    # to do: add table with concrete strengh, to choose which we wan-t to use, yet idk how
-
     epsilon_cu3 = const_parameters[0]
     epsilon_c3 = const_parameters[1]
     f_yd = const_parameters[2]
@@ -49,8 +47,10 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
     if x <= x_lim:
         sigma_s1 = f_yd
+        print("x<=x_lim YES")
 
         if x < x_min_yd:
+            print("x<x_min_yd YES")
             A = round(lambda_bet * (f_yd - epsilon_cu3 * es), 4)
             B = round(-2 * (f_yd * d - epsilon_cu3 * es * a2 * (1 + 0.5 * lambda_bet)), 4)
             C = round(
@@ -68,6 +68,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             print(result)
 
             if x <= x_min_minus_yd:
+                print("x<=x_min_minus_yd YES")
                 sigma_s2 = -f_yd
 
                 x = round(1 / (2 * lambda_bet) * (
@@ -76,12 +77,15 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
                 print(f"x {x}")
             else:
+                print("x<=x_min_minus_yd NO")
                 sigma_s2 = round(epsilon_cu3 * (x - a2) / x * es, 4)
 
         else:
+            print("x<x_min_yd NO")
             sigma_s2 = f_yd
 
     else:
+        print("x<=x_lim NO")
         sigma_s2 = f_yd
         A = round(lambda_bet * (f_yd + epsilon_cu3 * es), 4)
         B = round(-2 * (f_yd * a2 + epsilon_cu3 * es * d * (1 + 0.5 * lambda_bet)), 4)
@@ -98,6 +102,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
         print(f"x {x}")
 
         if x > h:
+            print("x>h YES")
             A = round(lambda_bet * (f_yd + epsilon_c3 * es), 4)
             B = round(-2 * (f_yd * (a2 + 0.5 * lambda_bet * x_0) + epsilon_c3 * es * d * (1 + 0.5 * lambda_bet)), 4)
             C = round(2 * ((n_ed * 10 ** -3 * (f_yd * e_s2 + epsilon_c3 * es * e_s1)) / (
@@ -115,6 +120,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             print(f"x {x}")
 
             if x > h / lambda_bet:
+                print("x>h/lambda_bet YES")
                 F1 = round(n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * h * (0.5 * h - a1), 4)
                 F2 = round(n_ed * 10 ** -3 * e_s2 - eta_bet * f_cd * b * h * (0.5 * h - a2), 4)
 
@@ -122,9 +128,11 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
                 print(f"x {x}")
 
                 if h / lambda_bet <= x <= x_max_yd:
+                    print("h/lambda_bet<=x<=x_max_yd YES")
                     sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 4)
 
                 else:
+                    print("h/lambda_bet<=x<=x_max_yd NO")
                     F1 = round(n_ed * 10 ** -3 * (e_s1 * d + e_s2 * a2) + eta_bet * f_cd * b * h * 0.5 * (
                             (a1 - a2) * (d + a2) - (d - a2) ** 2), 4)
                     F2 = round(n_ed * 10 ** -3 * (e_s1 + e_s2) + eta_bet * f_cd * b * h * (a1 - a2), 4)
@@ -136,16 +144,20 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
                     sigma_s2 = round(epsilon_c3 * (x - a2) / (x - x_0) * es, 4)
 
             else:
+                print("x>h/lambda_bet NO")
                 sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 4)
 
             if x <= h / lambda_bet:
+                print("x<=h/lambda_bet YES")
                 x = x
                 print(f"x {x}")
             else:
+                print("x<=h/lambda_bet NO")
                 x = h / lambda_bet
                 print(f"x {x}")
 
         else:
+            print("x>h NO")
             sigma_s1 = round(epsilon_cu3 * (d - x) / x * es, 4)
 
     print(f"Sigma s1 = {sigma_s1}")

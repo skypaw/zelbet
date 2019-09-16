@@ -57,20 +57,20 @@ concrete = [[12, 1.6],
             [90, 5.0]]
 
 concrete_dic = {
-    "C12": concrete[0],
-    "C16": concrete[1],
-    "C20": concrete[2],
-    "C25": concrete[3],
-    "C30": concrete[4],
-    "C35": concrete[5],
-    "C40": concrete[6],
-    "C45": concrete[7],
-    "C50": concrete[8],
-    "C55": concrete[9],
-    "C60": concrete[10],
-    "C70": concrete[11],
-    "C80": concrete[12],
-    "C90": concrete[13]
+    "C12/15": concrete[0],
+    "C16/20": concrete[1],
+    "C20/25": concrete[2],
+    "C25/30": concrete[3],
+    "C30/37": concrete[4],
+    "C35/45": concrete[5],
+    "C40/50": concrete[6],
+    "C45/55": concrete[7],
+    "C50/60": concrete[8],
+    "C55/67": concrete[9],
+    "C60/75": concrete[10],
+    "C70/85": concrete[11],
+    "C80/95": concrete[12],
+    "C90/105": concrete[13]
 }
 
 
@@ -92,4 +92,4 @@ def calculated_value_concrete(concrete_class):
 
     f_cd = round(alfacc * (f_ck / gammac), 2)
 
-    return eta_bet, lambda_bet, f_cd
+    return eta_bet, lambda_bet, f_cd, f_ctm

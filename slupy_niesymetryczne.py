@@ -5,7 +5,7 @@
 from slupy_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed):
+def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
     def x_niesymetryczny(lambda_bet_func, d_func, n_ed_func, e_s1_func, sigma_s2_func, as2_func, a2_func, eta_bet_func,
                          f_cd_func, b_func):
         x_func = round(1 / lambda_bet_func * (d_func - np.sqrt(
@@ -30,28 +30,26 @@ def main(h, b, a1, a2, m_ed, n_ed):
         m_s = e_cu_cu3 * es_func * as_1_2_min * (d_func - a2_func)
         return m_s
 
-    print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcement
-
-    # to do: add table with concrete strengh, to choose which we wan-t to use, yet idk how
-
-    lambda_bet = float(0.8)  # not a const, basicallv it depends of kind of concrete
-    eta_bet = float(1)  # like line above
-    f_cd = float(17.9)  # const for concrete C25/30
-    f_yk = float(500)
-    f_ctm = float(2.6)
-
-    # const
+    print("Projektowanie zbrojenia symetrycznego\n")  # unsymmetrical reinforcement
 
     epsilon_cu3 = const_parameters[0]
     epsilon_c3 = const_parameters[1]
     f_yd = const_parameters[2]
     es = const_parameters[3]
 
-    print(f"Obliczeniowa granica plastyczności stali {f_yd} [MPa]")
-    print(f"Moduł Younga {es} [MPa]")
+    f_yk = 500  #todo changhe this
+
+    print(h)
+    print(b)
+    print(a1)
+    print(a2)
+    print(m_ed)
+    print(n_ed)
+    print(lambda_bet)
+    print(eta_bet)
+    print(f_cd)
 
     # eccentricity
-
     e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
 
     print(f"Mimośród e = {e} [m]")

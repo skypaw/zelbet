@@ -5,7 +5,7 @@
 from slupy_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2):
+def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
     def abc_diagnostyka(e_s2_func, a2_func, lambda_bet_func, plus_minus_1, f_yd_func, a_s_1_2, e_s_1_2,
                         epsilon_cu3_func,
                         es_func, a_s_2_1, e_s_2_1, eta_bet_func, f_cd_func, b_func, a2_d):  # 2_1 when x < xlim
@@ -45,13 +45,7 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2):
 
         return sigma_s1_func, sigma_s2_func
 
-    print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
-
-    # to do: add table with concrete strengh, to choose which we wan-t to use, yet idk how
-
-    lambda_bet = float(0.8)  # not a const, basicallv it deepends of kind of concrete
-    eta_bet = float(1)  # like line above
-    f_cd = float(18)  # const concrete C25/30
+    print("Diagnostyka zbrojenia\n")  # symmetrical reinforcment
 
     # const
 
@@ -80,12 +74,22 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2):
     emin = (epsilon_c3 * es * (a_s2 * (0.5 * h - a2) - a_s1 * (0.5 * h - a1))) / (
             eta_bet * f_cd * b * h + epsilon_c3 * es * (a_s1 + a_s2))
 
-    # eccentricity
+    print(h)
+    print(b)
+    print(a1)
+    print(a2)
+    print(m_ed)
+    print(n_ed)
+    print(lambda_bet)
+    print(eta_bet)
+    print(f_cd)
+    print(f"e_min = {emin}")
 
+    # eccentricity
     e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
 
     if e <= emin:
-        a_s1_1 = a_s1
+        a_s1_1 = a_s1  # is this even ok? idk, have to check it
         a_s2_1 = a_s2
         a_s1 = a_s2_1
         a_s2 = a_s1_1
@@ -114,7 +118,7 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2):
             if x <= x_min_minus_yd:
                 x = 1 / lambda_bet * (
                         -(e_s2 - a2) + np.sqrt((e_s2 - a2) ** 2 + (2 * f_yd * (a_s1 * e_s1 + a_s2 * e_s2)) / (
-                        eta_bet * f_cd * b)))  # this and line 77 to function, difference with one minus  - between as1 and as2
+                        eta_bet * f_cd * b)))
 
         sigma_s1, sigma_s2 = sigma(epsilon_cu3, d, x, es, f_yd, a2)
 
@@ -183,7 +187,7 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2):
         else:
             x = h / lambda_bet
 
-    # final countings
+    # final counting
 
     print(f"N_ed = {n_ed}")
     print(f"M_ed = {m_ed}")
