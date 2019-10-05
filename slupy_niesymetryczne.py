@@ -119,7 +119,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
 
         print(f"As1 = {as1}")
         print(f"As2 = {as2}")
-        exit()
+        return
 
     else:
         as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3)
@@ -180,7 +180,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
 
                         print(f"As1 = {as1}")
                         print(f"As2 = {as2}")
-                        exit()
+                        return
 
                     else:
                         x = 10 ** 10  # powtórzenie kodu, robić z tego funkcje?
@@ -203,7 +203,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
                                 sigma_s2 * (d - a2)) * 10 ** 4
                         print(f"As1 = {as1}")
                         print(f"As2 = {as2}")
-                        exit()
+                        return
 
                 else:
                     as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (
