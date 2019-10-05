@@ -1,2 +1,3 @@
 # zelbet
-# This project is created to learn python basics and also to calculate concrete reinforcment.
+# The main goal of this project is to learn python basics.
+# Zelbet is a python programm to calculate concrete reinforcment.
