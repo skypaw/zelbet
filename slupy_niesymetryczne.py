@@ -1,7 +1,5 @@
 # coding=utf-8
 # http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_5.pdf
-
-
 from slupy_functions import *
 
 
@@ -37,7 +35,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
     f_yd = const_parameters[2]
     es = const_parameters[3]
 
-    f_yk = 500  #todo changhe this
+    f_yk = 500  # todo changhe this
 
     print(h)
     print(b)
@@ -79,12 +77,13 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
     as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
             sigma_s2 * (d - a2))
 
-    as_min = round(max(0.26 * (f_ctm / f_yk) * b * d, 0.0013 * b * d), 8)
+    as_min = round(max((0.10 * n_ed * 10 ** -3)/f_yd, (0.002 * b * 10 ** 2 * h * 10 ** 2) * 10 ** -4), 8)
 
     as2_min = 0.5 * as_min
     as1_min = 0.5 * as_min
 
-    print(as_min)
+    print(f"as2 = {as2}")
+    print(f"as_min{as_min}")
     print(f"x {x}")
     print(f"sigma_s2 {sigma_s2}")
 
@@ -119,10 +118,10 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
 
         print(f"As1 = {as1}")
         print(f"As2 = {as2}")
-        return
+        return as1, as2
 
     else:
-        as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3)
+        as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3)/f_yd
         if as1 < 0:
             as1 = as1_min
             m_s1 = m_s_func(epsilon_cu3, es, as1, d, a2)
@@ -180,7 +179,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
 
                         print(f"As1 = {as1}")
                         print(f"As2 = {as2}")
-                        return
+                        return as1, as2
 
                     else:
                         x = 10 ** 10  # powtórzenie kodu, robić z tego funkcje?
@@ -203,18 +202,36 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
                                 sigma_s2 * (d - a2)) * 10 ** 4
                         print(f"As1 = {as1}")
                         print(f"As2 = {as2}")
-                        return
+                        return as1, as2
 
                 else:
                     as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (
-                                d - 0.5 * lambda_bet * x)) / (
+                            d - 0.5 * lambda_bet * x)) / (
                                   f_yd * (d - a2)) * 10 ** 4
+                    as1 = as1 * 10 ** 4
             else:
                 as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
                         f_yd * (d - a2)) * 10 ** 4
+                as1 = as1 * 10 ** 4
         else:
             as1 = as1 * 10 ** 4
+            as2 = as2 * 10 ** 4
 
     print(f"As1 = {as1}")
     print(f"As2 = {as2}")
     return as1, as2
+
+
+h = 0.6
+b = 0.3
+a1 = 0.05
+a2 = 0.05
+eta_bet = 1.0
+lambda_bet = 0.8
+f_cd = 21.43
+f_ctm = 2.9
+
+m_ed = 300
+n_ed = 5000
+
+main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm)
