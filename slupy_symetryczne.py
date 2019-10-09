@@ -4,10 +4,8 @@ from slupy_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
-    f = open("log", "w+")
 
     print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
-    f.write("Projetkowanie zbrojenia symetrycznego")
 
     epsilon_cu3 = const_parameters[0]
     epsilon_c3 = const_parameters[1]
@@ -69,9 +67,9 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             print(f"C = {C}")
             print(f"D = {D}")
 
-            x, result = x_solution(A, B, C, D)
-            print(f"x {x}")
+            result = x_solution(A, B, C, D)
             print(result)
+            x = x_func_sol_g(result, 0)
 
             if x <= x_min_minus_yd:
                 print("x<=x_min_minus_yd YES")
@@ -104,8 +102,10 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
         print(f"C = {C}")
         print(f"D = {D}")
 
-        x, result = x_solution(A, B, C, D)
+        result = x_solution(A, B, C, D)
         print(result)
+
+        x = x_func_sol_g(result, x_lim)
         print(f"x {x}")
 
         if x > h:
@@ -122,8 +122,10 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             print(f"C = {C}")
             print(f"D = {D}")
 
-            x, result = x_solution(A, B, C, D)
+            result = x_solution(A, B, C, D)
             print(result)
+
+            x=x_func_sol_g(result, h)
             print(f"x {x}")
 
             if x > h / lambda_bet:

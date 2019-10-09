@@ -3,7 +3,7 @@
 from slupy_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
+def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     def x_niesymetryczny(lambda_bet_func, d_func, n_ed_func, e_s1_func, sigma_s2_func, as2_func, a2_func, eta_bet_func,
                          f_cd_func, b_func):
         x_func = round(1 / lambda_bet_func * (d_func - np.sqrt(
@@ -28,14 +28,15 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
         m_s = e_cu_cu3 * es_func * as_1_2_min * (d_func - a2_func)
         return m_s
 
-    print("Projektowanie zbrojenia symetrycznego\n")  # unsymmetrical reinforcement
+    print("Projektowanie zbrojenia symetrycznego\n")  # asymmetrical reinforcement
 
     epsilon_cu3 = const_parameters[0]
     epsilon_c3 = const_parameters[1]
     f_yd = const_parameters[2]
     es = const_parameters[3]
 
-    f_yk = 500  # todo changhe this
+    if m_ed == 0:
+        m_ed = 0.01
 
     print(h)
     print(b)
@@ -77,7 +78,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
     as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
             sigma_s2 * (d - a2))
 
-    as_min = round(max((0.10 * n_ed * 10 ** -3)/f_yd, (0.002 * b * 10 ** 2 * h * 10 ** 2) * 10 ** -4), 8)
+    as_min = round(max((0.10 * n_ed * 10 ** -3) / f_yd, (0.002 * b * 10 ** 2 * h * 10 ** 2) * 10 ** -4), 8)
 
     as2_min = 0.5 * as_min
     as1_min = 0.5 * as_min
@@ -100,9 +101,10 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
             print(B)
             print(C)
 
-            x, result = x_solution(1, A, B, C)
-            print(f"x {x}")
+            result = x_solution(1, A, B, C)
             print(result)
+
+            x = x_func_sol_g(result, 0)
 
             if x <= x_min_minus_yd:
                 sigma_s2 = -f_yd
@@ -121,7 +123,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
         return as1, as2
 
     else:
-        as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3)/f_yd
+        as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x - n_ed * 10 ** -3) / f_yd
         if as1 < 0:
             as1 = as1_min
             m_s1 = m_s_func(epsilon_cu3, es, as1, d, a2)
@@ -132,33 +134,45 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
             print(B)
             print(C)
 
-            x, result = x_solution(1, A, B, C)
-            print(f"x {x}")
+            result = x_solution(1, A, B, C)
             print(result)
+            x = x_func_sol_g(result, x_lim)
 
             if x > h:
                 m_s2 = m_s_func(epsilon_c3, es, as1, d, a2)
+                print(f"ms2 {m_s2}")
 
                 A = -(x_0 + (2 * a2) / lambda_bet)
-                B = 2 * (((n_ed * 10 ** -3 * e_s2 + m_s2) / lambda_bet ** 2 * eta_bet * f_cd * b) + (
+                B = 2 * ((n_ed * 10 ** -3 * e_s2 + m_s2) / (lambda_bet ** 2 * eta_bet * f_cd * b) + (
                         (a2 / lambda_bet) * x_0))
                 C = (-2 * (n_ed * 10 ** -3 * e_s2 * x_0 + d * m_s2)) / (lambda_bet ** 2 * eta_bet * f_cd * b)
 
-                x, result = x_solution(1, A, B, C)
-                print(f"x {x}")
+                print(f"A {A}")
+                print(f"B {B}")
+                print(f"C {C}")
+
+                result = x_solution(1, A, B, C)
                 print(result)
 
-                if x > h / lambda_bet:
+                x = x_func_sol_g(result, h)
+                print(f"x={x}")
+
+                if x > (h / lambda_bet):
                     f1 = (-n_ed * 10 ** -3 * e_s2 - eta_bet * f_cd * b * h * (0.5 * h - a2)) * (
-                            d - x_0)  # zrobić z tego funkcje
+                            d - x_0)
                     f2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * h * (0.5 * h - a1)) * (x_0 - a2)
+                    print(f"f1={f1}")
+                    print(f"f2={f2}")
 
                     if f2 - f1 > 0:
                         x = (-f1 * a2 + f2 * d + np.sqrt(f1 * f2) * (d - a2)) / (f2 - f1)
+                        print(f"x={x}")
                         if x >= x_max_yd:
                             x = x
+                            print(f"x={x}")
                         else:
                             x = x_max_yd
+                            print(f"x={x}")
 
                         sigma_s1 = epsilon_c3 * (d - x) / (x - x_0) * es
                         if sigma_s1 <= f_yd:
@@ -172,17 +186,15 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm):
                         else:
                             sigma_s2 = f_yd
 
-                        as1 = (n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * h * (0.5 * h - a2)) / \
-                              (sigma_s1 * (d - a2)) * 10 ** 4
-                        as2 = (n_ed * 10 ** -3 * e_s1 + eta_bet * f_cd * b * h * (0.5 * h - a1)) / \
-                              (sigma_s2 * (d - a2)) * 10 ** 4
+                        as1 = (n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * h * (0.5 * h - a2)) /(sigma_s1 * (d - a2)) * 10 ** 4
+                        as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * h * (0.5 * h - a1)) /(sigma_s2 * (d - a2)) * 10 ** 4
 
                         print(f"As1 = {as1}")
                         print(f"As2 = {as2}")
                         return as1, as2
 
                     else:
-                        x = 10 ** 10  # powtórzenie kodu, robić z tego funkcje?
+                        x = 10 ** 10
 
                         sigma_s1 = epsilon_c3 * (d - x) / (x - x_0) * es
                         if sigma_s1 <= f_yd:
@@ -231,7 +243,7 @@ lambda_bet = 0.8
 f_cd = 21.43
 f_ctm = 2.9
 
-m_ed = 300
-n_ed = 5000
+m_ed = 10
+n_ed = 5
 
-main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ctm)
+main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)

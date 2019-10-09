@@ -11,11 +11,22 @@ def x_solution(a_func, b_func, c_func, d_func):
     results = [np.roots(solution)]
     res = []
     for i in results[0]:
+
         if i.imag == 0.0:
             res.append(i)
+    return res
 
-    x_function = min([n for n in res if n > 0])
-    return x_function, res
+
+def x_func_sol_g(res_func, x1):  # g = greater
+    x_function = min([n for n in res_func if n > x1])
+    return x_function
+
+
+def x_func_sol_ge(res_func, x1):  # ge = greater equal
+    x_function = min([n for n in res_func if n >= x1])
+    return x_function
+
+
 
 
 def start_parameters(epsilon_cu3_func, epsilon_c3_func, f_yd_func, es_func, a2_func, a1_func, h_func):
