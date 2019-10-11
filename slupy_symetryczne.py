@@ -4,7 +4,6 @@ from slupy_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
-
     print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
 
     epsilon_cu3 = const_parameters[0]
@@ -77,7 +76,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
                 x = round(1 / (2 * lambda_bet) * (
                         (d + a2) - np.sqrt((d + a2) ** 2 -
-                                           (6 * n_ed * 10 ** -3 * (e_s1 + e_s2)) / (eta_bet * f_cd * b))), 6)
+                                           (4 * n_ed * 10 ** -3 * (e_s1 + e_s2)) / (eta_bet * f_cd * b))), 6)
 
                 print(f"x {x}")
             else:
@@ -125,7 +124,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             result = x_solution(A, B, C, D)
             print(result)
 
-            x=x_func_sol_g(result, h)
+            x = x_func_sol_g(result, h)
             print(f"x {x}")
 
             if x > h / lambda_bet:
@@ -142,7 +141,6 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
                     print("h/lambda_bet<=x<=x_max_yd YES")
                     sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 6)
 
-
                 else:
                     print("h/lambda_bet<=x<=x_max_yd NO")
                     f1 = round(n_ed * 10 ** -3 * (e_s1 * d + e_s2 * a2) + eta_bet * f_cd * b * h * 0.5 * (
@@ -157,7 +155,6 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
                     sigma_s1 = round(epsilon_c3 * (d - x) / (x - x_0) * es, 6)
                     sigma_s2 = round(epsilon_c3 * (x - a2) / (x - x_0) * es, 6)
-
 
             else:
                 print("x>h/lambda_bet NO")

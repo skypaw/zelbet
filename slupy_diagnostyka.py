@@ -115,8 +115,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
             if x <= x_min_minus_yd:
                 x = 1 / lambda_bet * (
-                        -(e_s2 - a2) + np.sqrt((e_s2 - a2) ** 2 + (2 * f_yd * (a_s1 * e_s1 + a_s2 * e_s2)) / (
-                        eta_bet * f_cd * b)))
+                        -(e_s2 - a2) + np.sqrt(
+                    (e_s2 - a2) ** 2 + (2 * f_yd * (a_s1 * e_s1 + a_s2 * e_s2)) / (eta_bet * f_cd * b)))
 
         sigma_s1, sigma_s2 = sigma(epsilon_cu3, d, x, es, f_yd, a2)
 
