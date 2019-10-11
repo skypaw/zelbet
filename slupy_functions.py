@@ -18,15 +18,13 @@ def x_solution(a_func, b_func, c_func, d_func):
 
 
 def x_func_sol_g(res_func, x1):  # g = greater
-    x_function = min([n for n in res_func if n > x1])
+    x_function = round(min([n for n in res_func if n > x1]), 6)
     return x_function
 
 
 def x_func_sol_ge(res_func, x1):  # ge = greater equal
-    x_function = min([n for n in res_func if n >= x1])
+    x_function = round(min([n for n in res_func if n >= x1]), 6)
     return x_function
-
-
 
 
 def start_parameters(epsilon_cu3_func, epsilon_c3_func, f_yd_func, es_func, a2_func, a1_func, h_func):
@@ -88,8 +86,8 @@ concrete_dic = {
 def calculated_value_concrete(concrete_class):
     f_ck, f_ctm = concrete_dic.get(concrete_class)
 
-    alfacc = 1.0  # one of fractor to count fcd, according to EC 1992 -1 -1 recommended is 1.0
-    gammac = 1.4  # concrete factor for  nomal situation todo addproperties menu where can change this whenever i want
+    alphacc = 1.0  # one of factor to calculate fcd, according to EC 1992 -1 -1 recommended value is 1.0
+    gammac = 1.4  # concrete factor for basic situation
 
     if f_ck < 50:
         lambda_bet = 0.8
@@ -101,6 +99,6 @@ def calculated_value_concrete(concrete_class):
     else:
         eta_bet = round(1.0 - (f_ck - 50) / 200, 6)
 
-    f_cd = round(alfacc * (f_ck / gammac), 2)
+    f_cd = round(alphacc * (f_ck / gammac), 2)
 
     return eta_bet, lambda_bet, f_cd, f_ctm
