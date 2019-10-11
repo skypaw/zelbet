@@ -20,6 +20,6 @@ To do list:
 - Alpha c = 1.0
 - Gamma c = 1.4
 
-###Used libraries:
+### Used libraries:
 - numpy - roots, polynomials
 - tkinter - GUI
