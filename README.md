@@ -8,9 +8,9 @@ With this calculator you can easily check what is important when we want to rein
 ### Based on EN 1992-1-1: Eurocode 2: Design of concrete structures
 
 To do list:
--[x] check and fix symmetric reinforcement
--[x] check and fix asymmetric reinforcement
--[] check diagnostic of reinforcement
+- [x] check and fix symmetric reinforcement
+- [x] check and fix asymmetric reinforcement
+- [] check diagnostic of reinforcement
 
 ### Basic values:
 - Es = 200,000 MPa
