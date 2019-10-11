@@ -1,5 +1,5 @@
 # coding=utf-8
-# http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_5.pdf
+# based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_5.pdf
 from slupy_functions import *
 
 
