@@ -54,10 +54,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
     f_yd = const_parameters[2]
     es = const_parameters[3]
 
-    print(f"Obliczeniowa granica plastyczności stali {f_yd} [MPa]")
-    print(f"Moduł Younga {es} [MPa]")
-
-    # calculations
+    if m_ed == 0:
+        m_ed = 0.01
 
     x_lim, epsilon_yd, x_min_minus_yd, x_min_yd, x_0, x_max_yd, d = start_parameters(epsilon_cu3, epsilon_c3,
                                                                                      f_yd, es, a2, a1, h)
@@ -110,10 +108,10 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
             print(f"B {B}")
             print(f"C {C}")
 
-            x, results = x_solution(1, A, B, C)
-
-            print(f"x = {x}")
+            results = x_solution(1, A, B, C)
             print(f"results = {results}")
+            x = x_func_sol_g(results, 0)
+            print(f"x = {x}")
 
             if x <= x_min_minus_yd:
                 x = 1 / lambda_bet * (
@@ -127,16 +125,16 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
     else:
         A, B, C = abc_diagnostyka(e_s2, a2, lambda_bet, 1, f_yd, a_s2, e_s2, epsilon_cu3, es, a_s1, e_s1, eta_bet, f_cd,
-                                  b,
-                                  d)
+                                  b, d)
         print(f"A {A}")
         print(f"B {B}")
         print(f"C {C}")
 
-        x, results = x_solution(1, A, B, C)
-
-        print(f"x = {x}")
+        results = x_solution(1, A, B, C)
         print(f"results = {results}")
+
+        x = x_func_sol_g(results, x_lim)
+        print(f"x = {x}")
 
         if x > h:
             A = -x_0 + (2 * (e_s2 - a2)) / lambda_bet
@@ -149,19 +147,21 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
             print(f"B {B}")
             print(f"C {C}")
 
-            x, results = x_solution(1, A, B, C)
-
+            results = x_solution(1, A, B, C)
             print(f"results = {results}")
+            x = x_func_sol_g(results, h)
             print(f"x = {x}")
 
             if x > h / lambda_bet:
                 x = (eta_bet * f_cd * b * h * e * x_0 + epsilon_c3 * es * (a_s1 * e_s1 * d + a_s2 * e_s2 * a2)) / (
-                        eta_bet * f_cd * b * h * e + epsilon_c3 + es * (a_s1 * e_s1 + a_s2 * e_s2))
+                        eta_bet * f_cd * b * h * e + epsilon_c3 * es * (a_s1 * e_s1 + a_s2 * e_s2))
+                print(f'x = {x}')
 
                 if x <= x_max_yd:
-                    x = ((
-                                 eta_bet * f_cd * b * h * e + f_yd * e_s2 * a_s2) * x_0 + epsilon_c3 * es * a_s1 * e_s1 * d) / (
+                    x = ((eta_bet * f_cd * b * h * e + f_yd * e_s2 * a_s2) * x_0 + epsilon_c3 * es * a_s1 * e_s1 * d) / (
                                 eta_bet * f_cd * b * h * e + f_yd * a_s2 * e_s2 + epsilon_c3 * es * a_s1 * e_s1)
+
+                    print(f'x = {x}')
                     sigma_s1, sigma_s2 = sigma_2(epsilon_c3, d, x, es, f_yd, a2, x_0)
                     print(f"sigma_s1 {sigma_s1}")
                     print(f"sigma_s2 {sigma_s2}")
