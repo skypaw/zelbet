@@ -1,5 +1,4 @@
 # coding=utf-8
-
 from tkinter import *
 import slupy_symetryczne
 import slupy_niesymetryczne
