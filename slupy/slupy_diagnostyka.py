@@ -45,7 +45,7 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
         return sigma_s1_func, sigma_s2_func
 
-    print("Diagnostyka zbrojenia\n")  # symmetrical reinforcment
+    print("Diagnostyka zbrojenia\n")
 
     # const
 
@@ -86,8 +86,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
     # eccentricity
     e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
 
-    if e <= emin:
-        a_s1_1 = a_s1  # is this even ok? idk, have to check it
+    if e < emin:
+        a_s1_1 = a_s1
         a_s2_1 = a_s2
         a_s1 = a_s2_1
         a_s2 = a_s1_1
