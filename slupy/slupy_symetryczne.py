@@ -69,6 +69,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             result = x_solution(A, B, C, D)
             print(result)
             x = x_func_sol_g(result, 0)
+            print(f'x = {x}')
 
             if x <= x_min_minus_yd:
                 print("x<=x_min_minus_yd YES")
