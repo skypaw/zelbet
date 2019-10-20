@@ -1,6 +1,6 @@
 import unittest
 
-from slupy import slupy_symetryczne
+from slupy import extension_symetryczne
 
 h = 0.6
 b = 0.3
@@ -17,10 +17,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-500 kN, M=0 kNm
         """
 
-        n_ed = -500.0
+        n_ed = 500.0
         m_ed = 0.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 5.750034, 2)
 
@@ -29,10 +29,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-500 kN, M=10 kNm
         """
 
-        n_ed = -500.0
+        n_ed = 500.0
         m_ed = 10.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 6.136741, 2)
 
@@ -41,10 +41,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-500 kN, M=75 kNm
         """
 
-        n_ed = -500.0
+        n_ed = 500.0
         m_ed = 75.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 8.906260, 2)
 
@@ -53,10 +53,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-500 kN, M=100 kNm
         """
 
-        n_ed = -500.0
+        n_ed = 500.0
         m_ed = 100.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 10.04298, 2)
 
@@ -65,10 +65,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-50 kN, M=200 kNm
         """
 
-        n_ed = -50.0
+        n_ed = 50.0
         m_ed = 200.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 9.409347, 2)
 
@@ -77,10 +77,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-50 kN, M=650 kNm
         """
 
-        n_ed = -50.0
+        n_ed = 50.0
         m_ed = 650.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 30.14430, 2)
 
@@ -89,10 +89,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-50 kN, M=1000 kNm
         """
 
-        n_ed = -50.0
+        n_ed = 50.0
         m_ed = 1000.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 46.29033, 2)
 
@@ -101,10 +101,10 @@ class TestSymmetricExtension(unittest.TestCase):
             Test symmetric reinforcement for N=-5 kN, M=1500 kNm
         """
 
-        n_ed = -5.0
+        n_ed = 5.0
         m_ed = 1500.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 68.83768, 2)
 

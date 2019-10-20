@@ -23,7 +23,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     print(eta_bet)
     print(f_cd)
 
-    e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
+    e, e_s1, e_s2 = eccentricity_extension(m_ed, n_ed, h, a1, a2)
 
     print(f"Mimośród e = {e} [m]")
     print(f"Mimośród e_s1 = {e_s1} [m]")
@@ -42,27 +42,32 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     sigma_s2 = epsilon_cu3 * (x - a2) / x * es
     if sigma_s2 > f_yd:
         sigma_s2 = f_yd
+        print(f'sigma_s2 {sigma_s2}')
 
     as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
             sigma_s2 * (d - a2))
+    print(f'as2 {as2}')
 
     as_min = round(max((0.10 * n_ed * 10 ** -3) / f_yd, (0.002 * b * 10 ** 2 * h * 10 ** 2) * 10 ** -4),
                    6)  # TODO to slupy_functions
 
     as2_min = 0.5 * as_min
+    print(f'as2_min = {as2_min}')
 
     if as2 < as2_min:
         as2 = as2_min
 
         x = 1 / lambda_bet * (d - np.sqrt(
             d ** 2 - (2 * (n_ed * 10 ** -3 * e_s1 - sigma_s2 * as2 ** (d - a2))) / (eta_bet * f_cd * b)))
+        print(f'x = {x}')
 
         if x < x_min_yd:
-            ms2 = epsilon_cu3 * es * as2_min * (d - a2)
+            ms2 = round(epsilon_cu3 * es * as2_min * (d - a2), 6)
+            print(f'ms2 = {ms2}')
 
-            A = -2 * d / lambda_bet
-            B = (2 * (n_ed * 10 ** -3 * e_s1 - ms2)) / (lambda_bet ** 2 * eta_bet * f_cd * b)
-            C = (2 * a2 * ms2) / (lambda_bet ** 2 * eta_bet * f_cd * b)
+            A = round(-2 * d / lambda_bet, 6)
+            B = round((2 * (n_ed * 10 ** -3 * e_s1 - ms2)) / (lambda_bet ** 2 * eta_bet * f_cd * b), 6)
+            C = round((2 * a2 * ms2) / (lambda_bet ** 2 * eta_bet * f_cd * b), 6)
 
             print(f"A = {A}")
             print(f"B = {B}")
@@ -73,13 +78,17 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
             x = x_func_sol_g(result, 0)
             print(f'x = {x}')
 
-            if x < x_min_minus_yd:
+            if x <= x_min_minus_yd:
                 sigma_s2 = -f_yd
+                print(f'sigma_s2 {sigma_s2}')
+
                 x = 1 / lambda_bet * (d - np.sqrt(
                     d ** 2 - (2 * (n_ed * 10 ** -3 * e_s1 + f_yd * as2 * (d - a2))) / (eta_bet * f_cd * b)))
+                print(f'x {x}')
 
                 if x <= 0:
                     x = 0
+                    print(f'x = {x}')
                     as1 = (n_ed * 10 ** -3 * e_s2) / (f_yd * (d - a2)) * 10 ** 4
                     as2 = (n_ed * 10 ** -3 * e_s1) / (-f_yd * (d - a2)) * 10 ** 4
 
@@ -89,9 +98,11 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
             else:
                 sigma_s2 = epsilon_cu3 * (x - a2) / x * es
+                print(f'sigma_s2 {sigma_s2}')
 
         else:
             sigma_s2 = f_yd
+            print(f'sigma_s2 {sigma_s2}')
 
     else:
         as1 = (sigma_s2 * as2 + eta_bet * f_cd * b * lambda_bet * x + n_ed * 10 ** -3) / f_yd * 10 ** 4

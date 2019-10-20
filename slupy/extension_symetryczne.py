@@ -25,7 +25,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     print(eta_bet)
     print(f_cd)
 
-    e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
+    e, e_s1, e_s2 = eccentricity_extension(m_ed, n_ed, h, a1, a2)
 
     print(f"Mimośród e = {e} [m]")
     print(f"Mimośród e_s1 = {e_s1} [m]")
@@ -42,9 +42,12 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     sigma_s2 = sigma_s1
 
     A = lambda_bet * (f_yd - epsilon_cu3 * es)
+
     B = -2 * (f_yd * d - epsilon_cu3 * es * a2 * (1 + 0.5 * lambda_bet))
+
     C = 2 * ((n_ed * 10 ** -3 * (f_yd * e_s1 - epsilon_cu3 * es * e_s2)) / (
             lambda_bet * eta_bet * f_cd * b) - epsilon_cu3 * es * a2 ** 2)
+
     D = (2 * n_ed * 10 ** -3 * epsilon_cu3 * es * a2 * e_s2) / (lambda_bet * eta_bet * f_cd * b)
 
     print(f"A = {A}")
@@ -59,22 +62,27 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
     if x <= x_min_minus_yd:
         sigma_s2 = -f_yd
+        print(f'sigma_s2 {sigma_s2}')
 
         x = 1 / (2 * lambda_bet) * (
                 (d + a2) - np.sqrt((d + a2) ** 2 - (4 * n_ed * 10 ** -3 * (e_s1 + e_s2)) / (eta_bet * f_cd * b)))
+        print(f'x = {x}')
 
         if x <= 0:
             x = 0
+            print(f'x = {x}')
 
     else:
         sigma_s2 = epsilon_cu3 * (x - a2) / x * es
+        print(f'sigma_s2 {sigma_s2}')
 
     as1 = (n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
             sigma_s1 * (d - a2)) * 10 ** 4
     as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
             sigma_s2 * (d - a2)) * 10 ** 4
 
-    print(as1)
-    print(as2)
+    print(f'as1 = {as1}')
+    print(f'as2 = {as2}')
 
     return as1, as2
+
