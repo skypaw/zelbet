@@ -41,11 +41,20 @@ def start_parameters(epsilon_cu3_func, epsilon_c3_func, f_yd_func, es_func, a2_f
     return x_lim_func, epsilon_yd_func, x_min_minus_yd_func, x_min_yd_func, x_0_func, x_max_yd_func, d_func
 
 
-def eccentricity(m_ed_func, n_ed_func, h_func, a1_func, a2_func):
+def eccentricity(m_ed_func, n_ed_func, h_func, a1_func, a2_func):  # eccentricity for compression
     e_func = round(abs(m_ed_func / n_ed_func), 6)
 
     e_s1_func = round(float(e_func + 0.5 * h_func - a1_func), 6)
     e_s2_func = round(float(e_func - 0.5 * h_func + a2_func), 6)
+
+    return e_func, e_s1_func, e_s2_func
+
+
+def eccentricity_extension(m_ed_func, n_ed_func, h_func, a1_func, a2_func):  # eccentricity for extension
+    e_func = round(abs(m_ed_func / n_ed_func), 6)
+
+    e_s1_func = round(float(e_func - 0.5 * h_func + a1_func), 6)
+    e_s2_func = round(float(e_func + 0.5 * h_func - a2_func), 6)
 
     return e_func, e_s1_func, e_s2_func
 
