@@ -10,6 +10,9 @@ To do list:
 - [x] check and fix symmetric reinforcement
 - [x] check and fix asymmetric reinforcement
 - [x] check diagnostic of reinforcement
+- [x] check and fix symmetric reincorcement for extension
+- [x] check and fix asymmetric reincorcement for extension
+- [ ] check and fix diagnostic for extension
 
 ### Basic values:
 - Es = 200,000 MPa
