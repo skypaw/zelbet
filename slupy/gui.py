@@ -1,6 +1,7 @@
 # coding=utf-8
 from tkinter import *
-from slupy import slupy_functions, slupy_diagnostyka, slupy_symetryczne, slupy_niesymetryczne
+from slupy import slupy_functions, slupy_diagnostyka, slupy_symetryczne, slupy_niesymetryczne, extension_symetryczne, \
+    extension_asymmetric, extension_diagnostyka
 
 
 class Menu:
@@ -124,7 +125,10 @@ class SymmetricReinforcement:
         m_ed = float(self.data_5.get().replace(',', '.'))
         n_ed = float(self.data_6.get().replace(',', '.'))
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+        if n_ed > 0:
+            as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+        else:
+            as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
 
         as1 = round(as1, 2)
         as2 = round(as2, 2)
@@ -202,7 +206,10 @@ class AsymmetricReinforcement:
         m_ed = float(self.data_5.get().replace(',', '.'))
         n_ed = float(self.data_6.get().replace(',', '.'))
 
-        as1, as2 = slupy_niesymetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+        if n_ed > 0:
+            as1, as2 = slupy_niesymetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+        else:
+            as1, as2 = extension_asymmetric.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
 
         as1 = round(as1, 2)
         as2 = round(as2, 2)
@@ -288,8 +295,12 @@ class DiagnosticReinforcement:
         as_1 = float(self.data_7.get().replace(',', '.')) * 10 ** -4
         as_2 = float(self.data_8.get().replace(',', '.')) * 10 ** -4
 
-        m_rd, n_rd = slupy_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
-                                            self.eta_bet, self.lambda_bet, self.f_cd)
+        if n_ed > 0:
+            m_rd, n_rd = slupy_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
+                                                self.eta_bet, self.lambda_bet, self.f_cd)
+        else:
+            m_rd, n_rd = extension_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
+                                                    self.eta_bet, self.lambda_bet, self.f_cd)
 
         m_rd = round(m_rd, 2)
         n_rd = round(n_rd, 2)

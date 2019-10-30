@@ -3,7 +3,7 @@
 from slupy.slupy_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
+def main(h, b, a1, a2, m_ed, n_ed_minus, eta_bet, lambda_bet, f_cd):
     print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
 
     epsilon_cu3 = const_parameters[0]
@@ -14,6 +14,8 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
     # dimensions
     if m_ed == 0:
         m_ed = 0.01
+
+    n_ed = abs(n_ed_minus)
 
     print(h)
     print(b)

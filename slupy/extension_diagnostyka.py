@@ -5,7 +5,7 @@
 from slupy.slupy_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
+def main(h, b, a1, a2, m_ed, n_ed_minus, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
     epsilon_cu3 = const_parameters[0]
     epsilon_c3 = const_parameters[1]
     f_yd = const_parameters[2]
@@ -13,6 +13,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
     if m_ed == 0:
         m_ed = 0.01
+
+    n_ed = abs(n_ed_minus)
 
     x_lim, epsilon_yd, x_min_minus_yd, x_min_yd, x_0, x_max_yd, d = start_parameters(epsilon_cu3, epsilon_c3,
                                                                                      f_yd, es, a2, a1, h)
