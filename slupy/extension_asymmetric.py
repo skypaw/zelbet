@@ -56,11 +56,11 @@ def main(h, b, a1, a2, m_ed, n_ed_minus, eta_bet, lambda_bet, f_cd):
     as2_min = 0.5 * as_min
     print(f'as2_min = {as2_min}')
 
-    if as2 < as2_min:
+    if as2 <= as2_min:
         as2 = as2_min
 
         x = 1 / lambda_bet * (d - np.sqrt(
-            d ** 2 - (2 * (n_ed * 10 ** -3 * e_s1 - sigma_s2 * as2 ** (d - a2))) / (eta_bet * f_cd * b)))
+            d ** 2 - (2 * (n_ed * 10 ** -3 * e_s1 - sigma_s2 * as2 * (d - a2))) / (eta_bet * f_cd * b)))
         print(f'x = {x}')
 
         if x < x_min_yd:

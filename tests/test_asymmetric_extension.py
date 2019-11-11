@@ -72,7 +72,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         self.assertAlmostEqual(as1, 9.407365, 2)
         self.assertAlmostEqual(as2, 1.800000, 2)
 
-    def test_50_650(self):  # test failed, but calculations are okay, probably data "33,83880" is wrong
+    def test_50_650(self):
         """
             Test asymmetric reinforcement for N=-50 kN, M=650 kNm
         """
