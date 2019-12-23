@@ -125,7 +125,7 @@ class SymmetricReinforcement:
         m_ed = float(self.data_5.get().replace(',', '.'))
         n_ed = float(self.data_6.get().replace(',', '.'))
 
-        if n_ed > 0:
+        if n_ed >= 0:
             as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
         else:
             as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
@@ -206,7 +206,7 @@ class AsymmetricReinforcement:
         m_ed = float(self.data_5.get().replace(',', '.'))
         n_ed = float(self.data_6.get().replace(',', '.'))
 
-        if n_ed > 0:
+        if n_ed >= 0:
             as1, as2 = slupy_niesymetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
         else:
             as1, as2 = extension_asymmetric.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
@@ -295,7 +295,7 @@ class DiagnosticReinforcement:
         as_1 = float(self.data_7.get().replace(',', '.')) * 10 ** -4
         as_2 = float(self.data_8.get().replace(',', '.')) * 10 ** -4
 
-        if n_ed > 0:
+        if n_ed >= 0:
             m_rd, n_rd = slupy_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
                                                 self.eta_bet, self.lambda_bet, self.f_cd)
         else:

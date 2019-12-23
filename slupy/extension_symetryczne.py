@@ -1,6 +1,7 @@
 # coding=utf-8
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_9.pdf
 from slupy.slupy_functions import *
+import numpy as np
 
 
 def main(h, b, a1, a2, m_ed, n_ed_minus, eta_bet, lambda_bet, f_cd):
@@ -78,10 +79,10 @@ def main(h, b, a1, a2, m_ed, n_ed_minus, eta_bet, lambda_bet, f_cd):
         sigma_s2 = epsilon_cu3 * (x - a2) / x * es
         print(f'sigma_s2 {sigma_s2}')
 
-    as1 = (n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
-            sigma_s1 * (d - a2)) * 10 ** 4
-    as2 = (n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
-            sigma_s2 * (d - a2)) * 10 ** 4
+    as1 = np.real((n_ed * 10 ** -3 * e_s2 + eta_bet * f_cd * b * lambda_bet * x * (0.5 * lambda_bet * x - a2)) / (
+            sigma_s1 * (d - a2)) * 10 ** 4)
+    as2 = np.real((n_ed * 10 ** -3 * e_s1 - eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x)) / (
+            sigma_s2 * (d - a2)) * 10 ** 4)
 
     print(f'as1 = {as1}')
     print(f'as2 = {as2}')
