@@ -1,6 +1,6 @@
 # coding=utf-8
 from tkinter import *
-from slupy import global_functions, compression_diagnostic, compression_symmetric, compression_asymmetric, extension_symmetric, \
+from uls import global_functions, compression_diagnostic, compression_symmetric, compression_asymmetric, extension_symmetric, \
     extension_asymmetric, extension_diagnostic
 
 

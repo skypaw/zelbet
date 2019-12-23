@@ -2,7 +2,7 @@
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_7.pdf
 
 
-from slupy.global_functions import *
+from uls.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):

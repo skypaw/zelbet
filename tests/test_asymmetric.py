@@ -1,6 +1,6 @@
 import unittest
 
-from slupy import compression_asymmetric
+from uls import compression_asymmetric
 
 h = 0.6
 b = 0.3

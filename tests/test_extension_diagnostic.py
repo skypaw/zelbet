@@ -1,6 +1,6 @@
 import unittest
 
-from slupy import extension_diagnostic
+from uls import extension_diagnostic
 
 h = 0.6
 b = 0.3

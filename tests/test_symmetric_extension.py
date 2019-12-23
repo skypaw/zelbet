@@ -1,6 +1,6 @@
 import unittest
 
-from slupy import extension_symmetric
+from uls import extension_symmetric
 
 h = 0.6
 b = 0.3
