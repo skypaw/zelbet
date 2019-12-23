@@ -6,7 +6,7 @@ from slupy.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
-    def abc_diagnostyka(e_s2_func, a2_func, lambda_bet_func, plus_minus_1, f_yd_func, a_s_1_2, e_s_1_2,
+    def abc_diagnostic(e_s2_func, a2_func, lambda_bet_func, plus_minus_1, f_yd_func, a_s_1_2, e_s_1_2,
                         epsilon_cu3_func,
                         es_func, a_s_2_1, e_s_2_1, eta_bet_func, f_cd_func, b_func, a2_d):  # 2_1 when x < xlim
         a_function = (2 * (e_s2_func - a2_func)) / lambda_bet_func
@@ -102,7 +102,7 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
     if x <= x_lim:
         if x < x_min_yd:
-            A, B, C = abc_diagnostyka(e_s2, a2, lambda_bet, -1, f_yd, a_s1, e_s1, epsilon_cu3, es, a_s2, e_s2, eta_bet,
+            A, B, C = abc_diagnostic(e_s2, a2, lambda_bet, -1, f_yd, a_s1, e_s1, epsilon_cu3, es, a_s2, e_s2, eta_bet,
                                       f_cd, b, a2)
             print(f"A {A}")
             print(f"B {B}")
@@ -124,7 +124,7 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
         print(f"sigma_s2 {sigma_s2}")
 
     else:
-        A, B, C = abc_diagnostyka(e_s2, a2, lambda_bet, 1, f_yd, a_s2, e_s2, epsilon_cu3, es, a_s1, e_s1, eta_bet, f_cd,
+        A, B, C = abc_diagnostic(e_s2, a2, lambda_bet, 1, f_yd, a_s2, e_s2, epsilon_cu3, es, a_s1, e_s1, eta_bet, f_cd,
                                   b, d)
         print(f"A {A}")
         print(f"B {B}")
