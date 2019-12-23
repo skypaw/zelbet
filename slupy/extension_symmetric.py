@@ -1,6 +1,6 @@
 # coding=utf-8
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_9.pdf
-from slupy.slupy_functions import *
+from slupy.global_functions import *
 import numpy as np
 
 

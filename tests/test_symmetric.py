@@ -1,6 +1,6 @@
 import unittest
 
-from slupy import slupy_symetryczne
+from slupy import compression_symmetric
 
 h = 0.6
 b = 0.3
@@ -20,7 +20,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5.0
         m_ed = 10.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 0.329204, 2)
 
@@ -32,7 +32,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 100.0
         m_ed = 100.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 3.101074, 2)
 
@@ -44,7 +44,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 1000.0
         m_ed = 500.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 12.77754, 2)
 
@@ -56,7 +56,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 1000.00
         m_ed = 750.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 24.27754, 2)
 
@@ -68,7 +68,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 3500.0
         m_ed = 500.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 21.21958, 2)
 
@@ -80,7 +80,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 3500.0
         m_ed = 350.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 13.02856, 2)
 
@@ -92,7 +92,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5000.0
         m_ed = 300.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 26.57117, 2)
 
@@ -104,7 +104,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5000.0
         m_ed = 250.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 24.29538, 2)
 
@@ -116,7 +116,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5000.0
         m_ed = 225.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 23.18530, 2)
 
@@ -128,7 +128,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5000.0
         m_ed = 100.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 17.73990, 2)
 
@@ -140,7 +140,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5000.0
         m_ed = 25.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 16.32285, 2)
 
@@ -152,7 +152,7 @@ class TestSymmetric(unittest.TestCase):
         n_ed = 5000.0
         m_ed = 0.0
 
-        as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
+        as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd)
         self.assertAlmostEqual(as1, as2, 1)
         self.assertAlmostEqual(as1, 16.32285, 2)
 
