@@ -4,13 +4,14 @@ from uls.global_functions import *
 import numpy as np
 
 
-def main(h, b, a1, a2, m_ed, n_ed_minus, eta_bet, lambda_bet, f_cd):
+def main(h, b, a1, a2, m_ed, n_ed_minus, eta_bet, lambda_bet, f_cd, f_ck):
     print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
 
-    epsilon_cu3 = const_parameters[0]
-    epsilon_c3 = const_parameters[1]
-    f_yd = const_parameters[2]
-    es = const_parameters[3]
+    epsilon_cu3, epsilon_c3 = epsilon_cu_3_c3(f_ck)
+
+    f_yd = const_parameters[0]
+    es = const_parameters[1]
+
 
     # dimensions
     if m_ed == 0:

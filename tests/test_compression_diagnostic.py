@@ -8,6 +8,7 @@ a1 = a2 = 0.05
 eta_bet = 1.0
 lambda_bet = 0.8
 f_cd = 21.43
+f_ck = 50
 
 
 class TestAsymmetric(unittest.TestCase):
@@ -23,7 +24,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 0.219840 * 10 ** -4
         as_2 = 1.80000 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -38,7 +39,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 3.102643 * 10 ** -4
         as_2 = 1.80000 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -53,7 +54,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 17.95217 * 10 ** -4
         as_2 = 1.80000 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -68,7 +69,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 29.879164 * 10 ** -4
         as_2 = 12.74813 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -83,7 +84,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 4.025000 * 10 ** -4
         as_2 = 21.79357 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -98,7 +99,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 4.025000 * 10 ** -4
         as_2 = 12.94635 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -113,7 +114,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 5.750000 * 10 ** -4
         as_2 = 26.74230 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -128,7 +129,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 5.750000 * 10 ** -4
         as_2 = 24.60759 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -143,7 +144,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 4.578443 * 10 ** -4
         as_2 = 23.49285 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -158,7 +159,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 12.95305 * 10 ** -4
         as_2 = 18.66734 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -173,7 +174,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 15.58093 * 10 ** -4
         as_2 = 17.00950 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 
@@ -188,7 +189,7 @@ class TestAsymmetric(unittest.TestCase):
         as_1 = 16.32650 * 10 ** -4
         as_2 = 16.32655 * 10 ** -4
 
-        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 0)
         self.assertAlmostEqual(m_rd, m_ed, 0)
 

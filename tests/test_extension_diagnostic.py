@@ -8,6 +8,7 @@ a1 = a2 = 0.05
 eta_bet = 1.0
 lambda_bet = 0.8
 f_cd = 21.43
+f_ck = 30
 
 
 class TestAsymmetricExtension(unittest.TestCase):
@@ -23,7 +24,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 5.750034 * 10 ** -4
         as_2 = 5.750034 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
 
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
@@ -39,7 +40,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 6.210037 * 10 ** -4
         as_2 = 5.290032 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 
@@ -54,7 +55,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 9.200055 * 10 ** -4
         as_2 = 2.300014 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 
@@ -69,7 +70,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 10.29313 * 10 ** -4
         as_2 = 1.800000 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 
@@ -84,7 +85,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 9.407365 * 10 ** -4
         as_2 = 1.800000 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 
@@ -99,7 +100,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 33.83880 * 10 ** -4
         as_2 = 1.800000 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 
@@ -114,7 +115,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 53.45499 * 10 ** -4
         as_2 = 12.17093 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 
@@ -129,7 +130,7 @@ class TestAsymmetricExtension(unittest.TestCase):
         as_1 = 75.937610 * 10 ** -4
         as_2 = 35.68857 * 10 ** -4
 
-        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd)
+        n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2, eta_bet, lambda_bet, f_cd, f_ck)
         self.assertAlmostEqual(n_rd, n_ed, 1)
         self.assertAlmostEqual(m_rd, m_ed, 1)
 

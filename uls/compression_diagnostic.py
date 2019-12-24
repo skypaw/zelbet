@@ -5,7 +5,7 @@
 from uls.global_functions import *
 
 
-def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
+def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd, f_ck):
     def abc_diagnostic(e_s2_func, a2_func, lambda_bet_func, plus_minus_1, f_yd_func, a_s_1_2, e_s_1_2, epsilon_cu3_func,
                        es_func, a_s_2_1, e_s_2_1, eta_bet_func, f_cd_func, b_func, a2_d):  # 2_1 when x < xlim
         a_function = (2 * (e_s2_func - a2_func)) / lambda_bet_func
@@ -48,10 +48,10 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
     # const
 
-    epsilon_cu3 = const_parameters[0]
-    epsilon_c3 = const_parameters[1]
-    f_yd = const_parameters[2]
-    es = const_parameters[3]
+    epsilon_cu3, epsilon_c3 = epsilon_cu_3_c3(f_ck)
+
+    f_yd = const_parameters[0]
+    es = const_parameters[1]
 
     if m_ed == 0:
         m_ed = 0.01
