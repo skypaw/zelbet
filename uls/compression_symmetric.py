@@ -4,7 +4,7 @@ from uls.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd, f_ck):
-    print("Projektowanie zbrojenia symetrycznego\n")  # symmetrical reinforcment
+    print("Symmetric reinforcement\n")  # symmetrical reinforcment
 
     epsilon_cu3, epsilon_c3 = epsilon_cu_3_c3(f_ck)
 
