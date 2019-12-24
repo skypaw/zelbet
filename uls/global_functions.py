@@ -109,12 +109,12 @@ def calculated_value_concrete(concrete_class):
     alphacc = 1.0  # one of factor to calculate fcd, according to EC 1992 -1 -1 recommended value is 1.0
     gammac = 1.4  # concrete factor for basic situation
 
-    if f_ck < 50:
+    if f_ck <= 50:
         lambda_bet = 0.8
     else:
         lambda_bet = round(0.8 - (f_ck - 50) / 400, 6)
 
-    if f_ck < 50:
+    if f_ck <= 50:
         eta_bet = 1.0
     else:
         eta_bet = round(1.0 - (f_ck - 50) / 200, 6)
