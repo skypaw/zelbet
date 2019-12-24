@@ -2,7 +2,18 @@
 
 import numpy as np
 
-const_parameters = (0.0035, 0.00175, 434.78, 200000)
+const_parameters = (434.78, 200000)
+
+
+def epsilon_cu_3_c3(f_ck):
+    if f_ck <= 50:
+        epsilon_cu_3_func = 0.0035
+        epsilon_c_3_func = 0.00175
+    else:
+        epsilon_cu_3_func = 2.6 + 35 * (0.01 * (90 - f_ck) ** 4) * 0.001
+        epsilon_c_3_func = (1.75 + 0.01375 * (f_ck - 50)) * 0.001
+
+    return epsilon_cu_3_func, epsilon_c_3_func
 
 
 def x_solution(a_func, b_func, c_func, d_func):
@@ -98,16 +109,16 @@ def calculated_value_concrete(concrete_class):
     alphacc = 1.0  # one of factor to calculate fcd, according to EC 1992 -1 -1 recommended value is 1.0
     gammac = 1.4  # concrete factor for basic situation
 
-    if f_ck < 50:
+    if f_ck <= 50:
         lambda_bet = 0.8
     else:
         lambda_bet = round(0.8 - (f_ck - 50) / 400, 6)
 
-    if f_ck < 50:
+    if f_ck <= 50:
         eta_bet = 1.0
     else:
         eta_bet = round(1.0 - (f_ck - 50) / 200, 6)
 
-    f_cd = round(alphacc * (f_ck / gammac), 2)
+    f_cd = round(alphacc * (f_ck / gammac), 6)
 
-    return eta_bet, lambda_bet, f_cd, f_ctm
+    return eta_bet, lambda_bet, f_cd, f_ctm, f_ck
