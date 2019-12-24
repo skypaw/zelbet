@@ -12,7 +12,7 @@ To do list:
 - [x] check diagnostic of reinforcement
 - [x] check and fix symmetric reincorcement for extension
 - [x] check and fix asymmetric reincorcement for extension
-- [ ] check and fix diagnostic for extension
+- [x] check and fix diagnostic for extension
 - [ ] change value of Epsilon c3/cu3 for >C50 concrete
 
 ### Basic values:
