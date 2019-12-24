@@ -1,6 +1,7 @@
 # coding=utf-8
 from tkinter import *
-from uls import global_functions, compression_diagnostic, compression_symmetric, compression_asymmetric, extension_symmetric, \
+from uls import global_functions, compression_diagnostic, compression_symmetric, compression_asymmetric, \
+    extension_symmetric, \
     extension_asymmetric, extension_diagnostic
 
 
@@ -296,10 +297,10 @@ class DiagnosticReinforcement:
         as_2 = float(self.data_8.get().replace(',', '.')) * 10 ** -4
 
         if n_ed >= 0:
-            m_rd, n_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
+            n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
                                                      self.eta_bet, self.lambda_bet, self.f_cd)
         else:
-            m_rd, n_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
+            n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
                                                    self.eta_bet, self.lambda_bet, self.f_cd)
 
         m_rd = round(m_rd, 2)
