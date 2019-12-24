@@ -1,7 +1,8 @@
 # coding=utf-8
 from tkinter import *
-from slupy import slupy_functions, slupy_diagnostyka, slupy_symetryczne, slupy_niesymetryczne, extension_symetryczne, \
-    extension_asymmetric, extension_diagnostyka
+from uls import global_functions, compression_diagnostic, compression_symmetric, compression_asymmetric, \
+    extension_symmetric, \
+    extension_asymmetric, extension_diagnostic
 
 
 class Menu:
@@ -114,7 +115,7 @@ class SymmetricReinforcement:
         self.result_2.grid(row=13, sticky=E)
 
     def option_menu(self, selection):
-        self.eta_bet, self.lambda_bet, self.f_cd, self.f_ctm = slupy_functions.calculated_value_concrete(selection)
+        self.eta_bet, self.lambda_bet, self.f_cd, self.f_ctm = global_functions.calculated_value_concrete(selection)
         print(self.eta_bet, self.lambda_bet, self.f_cd)
 
     def onclick(self):
@@ -125,10 +126,10 @@ class SymmetricReinforcement:
         m_ed = float(self.data_5.get().replace(',', '.'))
         n_ed = float(self.data_6.get().replace(',', '.'))
 
-        if n_ed > 0:
-            as1, as2 = slupy_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+        if n_ed >= 0:
+            as1, as2 = compression_symmetric.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
         else:
-            as1, as2 = extension_symetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+            as1, as2 = extension_symmetric.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
 
         as1 = round(as1, 2)
         as2 = round(as2, 2)
@@ -195,7 +196,7 @@ class AsymmetricReinforcement:
         self.result_2.grid(row=13, sticky=E)
 
     def option_menu(self, selection):
-        self.eta_bet, self.lambda_bet, self.f_cd, self.f_ctm = slupy_functions.calculated_value_concrete(selection)
+        self.eta_bet, self.lambda_bet, self.f_cd, self.f_ctm = global_functions.calculated_value_concrete(selection)
         print(self.eta_bet, self.lambda_bet, self.f_cd)
 
     def onclick(self):
@@ -206,8 +207,8 @@ class AsymmetricReinforcement:
         m_ed = float(self.data_5.get().replace(',', '.'))
         n_ed = float(self.data_6.get().replace(',', '.'))
 
-        if n_ed > 0:
-            as1, as2 = slupy_niesymetryczne.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
+        if n_ed >= 0:
+            as1, as2 = compression_asymmetric.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
         else:
             as1, as2 = extension_asymmetric.main(h, b, a1, a2, m_ed, n_ed, self.eta_bet, self.lambda_bet, self.f_cd)
 
@@ -282,7 +283,7 @@ class DiagnosticReinforcement:
         self.result_2.grid(row=15, sticky=E)
 
     def option_menu(self, selection):
-        self.eta_bet, self.lambda_bet, self.f_cd, self.f_ctm = slupy_functions.calculated_value_concrete(selection)
+        self.eta_bet, self.lambda_bet, self.f_cd, self.f_ctm = global_functions.calculated_value_concrete(selection)
         print(self.eta_bet, self.lambda_bet, self.f_cd)
 
     def onclick(self):
@@ -295,12 +296,12 @@ class DiagnosticReinforcement:
         as_1 = float(self.data_7.get().replace(',', '.')) * 10 ** -4
         as_2 = float(self.data_8.get().replace(',', '.')) * 10 ** -4
 
-        if n_ed > 0:
-            m_rd, n_rd = slupy_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
-                                                self.eta_bet, self.lambda_bet, self.f_cd)
+        if n_ed >= 0:
+            n_rd, m_rd = compression_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
+                                                     self.eta_bet, self.lambda_bet, self.f_cd)
         else:
-            m_rd, n_rd = extension_diagnostyka.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
-                                                    self.eta_bet, self.lambda_bet, self.f_cd)
+            n_rd, m_rd = extension_diagnostic.main(h, b, a1, a2, m_ed, n_ed, as_1, as_2,
+                                                   self.eta_bet, self.lambda_bet, self.f_cd)
 
         m_rd = round(m_rd, 2)
         n_rd = round(n_rd, 2)

@@ -2,13 +2,12 @@
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_7.pdf
 
 
-from slupy.slupy_functions import *
+from uls.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
-    def abc_diagnostyka(e_s2_func, a2_func, lambda_bet_func, plus_minus_1, f_yd_func, a_s_1_2, e_s_1_2,
-                        epsilon_cu3_func,
-                        es_func, a_s_2_1, e_s_2_1, eta_bet_func, f_cd_func, b_func, a2_d):  # 2_1 when x < xlim
+    def abc_diagnostic(e_s2_func, a2_func, lambda_bet_func, plus_minus_1, f_yd_func, a_s_1_2, e_s_1_2, epsilon_cu3_func,
+                       es_func, a_s_2_1, e_s_2_1, eta_bet_func, f_cd_func, b_func, a2_d):  # 2_1 when x < xlim
         a_function = (2 * (e_s2_func - a2_func)) / lambda_bet_func
         b_function = (plus_minus_1 * 2 * (
                 f_yd_func * a_s_1_2 * e_s_1_2 + plus_minus_1 * epsilon_cu3_func * es_func * a_s_2_1 * e_s_2_1)) / (
@@ -102,8 +101,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
     if x <= x_lim:
         if x < x_min_yd:
-            A, B, C = abc_diagnostyka(e_s2, a2, lambda_bet, -1, f_yd, a_s1, e_s1, epsilon_cu3, es, a_s2, e_s2, eta_bet,
-                                      f_cd, b, a2)
+            A, B, C = abc_diagnostic(e_s2, a2, lambda_bet, -1, f_yd, a_s1, e_s1, epsilon_cu3, es, a_s2, e_s2, eta_bet,
+                                     f_cd, b, a2)
             print(f"A {A}")
             print(f"B {B}")
             print(f"C {C}")
@@ -124,8 +123,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
         print(f"sigma_s2 {sigma_s2}")
 
     else:
-        A, B, C = abc_diagnostyka(e_s2, a2, lambda_bet, 1, f_yd, a_s2, e_s2, epsilon_cu3, es, a_s1, e_s1, eta_bet, f_cd,
-                                  b, d)
+        A, B, C = abc_diagnostic(e_s2, a2, lambda_bet, 1, f_yd, a_s2, e_s2, epsilon_cu3, es, a_s1, e_s1, eta_bet, f_cd,
+                                 b, d)
         print(f"A {A}")
         print(f"B {B}")
         print(f"C {C}")
@@ -158,7 +157,8 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
                 print(f'x = {x}')
 
                 if x <= x_max_yd:
-                    x = ((eta_bet * f_cd * b * h * e + f_yd * e_s2 * a_s2) * x_0 + epsilon_c3 * es * a_s1 * e_s1 * d) / (
+                    x = ((
+                                 eta_bet * f_cd * b * h * e + f_yd * e_s2 * a_s2) * x_0 + epsilon_c3 * es * a_s1 * e_s1 * d) / (
                                 eta_bet * f_cd * b * h * e + f_yd * a_s2 * e_s2 + epsilon_c3 * es * a_s1 * e_s1)
 
                     print(f'x = {x}')
@@ -195,11 +195,10 @@ def main(h, b, a1, a2, m_ed, n_ed, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
     print(x)
     print(d)
 
-    n_rd = (eta_bet * f_cd * b * lambda_bet * x - sigma_s1 * a_s1 + sigma_s2 * a_s2) * 10 ** 3
-    m_rd = (eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x) + sigma_s2 * a_s2 * (
-            d - a2) - n_ed * 10 ** -3 * (
-                    0.5 * h - a1)) * 10 ** 3
+    n_rd = np.real((eta_bet * f_cd * b * lambda_bet * x - sigma_s1 * a_s1 + sigma_s2 * a_s2) * 10 ** 3)
+    m_rd = np.real((eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x) + sigma_s2 * a_s2 * (
+            d - a2) - n_ed * 10 ** -3 * (0.5 * h - a1)) * 10 ** 3)
 
     print(f"N_rd = {n_rd}")
     print(f"M_rd = {m_rd}")
-    return m_rd, n_rd
+    return n_rd, m_rd

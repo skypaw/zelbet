@@ -1,6 +1,6 @@
 # coding=utf-8
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_6.pdf
-from slupy.slupy_functions import *
+from uls.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):

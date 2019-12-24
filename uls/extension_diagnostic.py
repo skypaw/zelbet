@@ -2,7 +2,7 @@
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_10.pdf
 
 
-from slupy.slupy_functions import *
+from uls.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed_minus, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
@@ -28,7 +28,7 @@ def main(h, b, a1, a2, m_ed, n_ed_minus, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
 
     # eccentricity min
 
-    emin = (a_s1 * 10 ** -4 * (0.5 * h - a1) - a_s2 * 10 ** -4 * (0.5 * h - a2)) / (a_s1 * 10 ** -4 + a_s2 * 10 ** -4)
+    emin = (a_s1 * (0.5 * h - a1) - a_s2 * (0.5 * h - a2)) / (a_s1 + a_s2)
 
     print(h)
     print(b)
@@ -42,39 +42,50 @@ def main(h, b, a1, a2, m_ed, n_ed_minus, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
     print(f"e_min = {emin}")
 
     # eccentricity
-    e, e_s1, e_s2 = eccentricity(m_ed, n_ed, h, a1, a2)
+    e, e_s1, e_s2 = eccentricity_extension(m_ed, n_ed, h, a1, a2)
 
-    if e <= emin:
+    print(f"e = {e}")
+
+    if e < emin:
         a_s1_1 = a_s1
         a_s2_1 = a_s2
         a_s1 = a_s2_1
         a_s2 = a_s1_1
 
+    print(f"a_s1 {a_s1}")
+    print(f"a_s2 {a_s2}")
+
     x = 1 / lambda_bet * ((e_s2 + a2) - np.sqrt(
-        (e_s2 + a2) ** 2 - (2 * f_yd * (a_s1 * 10 ** -4 * e_s1 - a_s2 * 10 ** -4 * e_s2)) / (eta_bet * f_cd * b)))
+        (e_s2 + a2) ** 2 - (2 * f_yd * (a_s1 * e_s1 - a_s2 * e_s2)) / (eta_bet * f_cd * b)))
+
+    print(f'x = {x}')
 
     if x < x_min_yd:
-        A = (-2 * (e_s2 * a2)) / lambda_bet
-        B = (2 * (a_s1 * 10 ** -4 * f_yd * e_s1 - a_s2 * epsilon_cu3 * es * e_s2)) / (
+        A = (-2 * (e_s2 + a2)) / lambda_bet
+        B = (2 * (a_s1 * f_yd * e_s1 - a_s2 * epsilon_cu3 * es * e_s2)) / (
                 lambda_bet ** 2 * eta_bet * f_cd * b)
-        C = (2 * a_s2 * 10 ** -4 * epsilon_cu3 * es * e_s2 * a2) / (lambda_bet ** 2 * eta_bet * f_cd * b)
+        C = (2 * a_s2 * epsilon_cu3 * es * e_s2 * a2) / (lambda_bet ** 2 * eta_bet * f_cd * b)
 
         result = x_solution(1, A, B, C)
         print(result)
         x = x_func_sol_g(result, 0)
         print(f'x = {x}')
 
-        if x < x_min_yd:
-            x = 1 / lambda_bet * ((e_s2 * a2) - np.sqrt(
-                (e_s2 + a2) ** 2 - (2 * f_yd * (a_s1 * 10 ** -4 * e_s1 + a_s2 * 10 ** -4 * e_s2)) / (
+        if x < x_min_minus_yd:
+            x = 1 / lambda_bet * ((e_s2 + a2) - np.sqrt(
+                (e_s2 + a2) ** 2 - (2 * f_yd * (a_s1 * e_s1 + a_s2 * e_s2)) / (
                         eta_bet * f_cd * b)))
+            print(f'x = {x}')
 
     if x > 0:
         sigma_s1 = epsilon_cu3 * (d - x) / x * es
+        print(sigma_s1)
+
         if sigma_s1 > f_yd:
             sigma_s1 = f_yd
 
         sigma_s2 = epsilon_cu3 * (x - a2) / x * es
+        print(sigma_s2)
         if sigma_s2 > f_yd:
             sigma_s2 = f_yd
 
@@ -86,9 +97,12 @@ def main(h, b, a1, a2, m_ed, n_ed_minus, a_s1, a_s2, eta_bet, lambda_bet, f_cd):
         sigma_s1 = f_yd
         sigma_s2 = -f_yd
 
-    n_rd = -eta_bet * f_cd * b * lambda_bet * x + sigma_s1 * a_s1 * 10 ** -4 - sigma_s2 * a_s2 * 10 ** 3
-    m_rd = eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x) + sigma_s2 * a_s2 * (d - a2) + n_ed * (
-            0.5 * h - a1) * 10 ** 3
+    print(sigma_s1)
+    print(sigma_s2)
+
+    n_rd = (-eta_bet * f_cd * b * lambda_bet * x + sigma_s1 * a_s1 - sigma_s2 * a_s2) * 10 ** 3
+    m_rd = (eta_bet * f_cd * b * lambda_bet * x * (d - 0.5 * lambda_bet * x) + sigma_s2 * a_s2 * (
+                d - a2) + n_ed * 10 ** -3 * (0.5 * h - a1)) * 10 ** 3
 
     print(n_rd)
     print(m_rd)

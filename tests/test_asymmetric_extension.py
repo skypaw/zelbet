@@ -1,6 +1,6 @@
 import unittest
 
-from slupy import extension_asymmetric
+from uls import extension_asymmetric
 
 h = 0.6
 b = 0.3

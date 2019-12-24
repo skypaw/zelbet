@@ -1,10 +1,10 @@
 # coding=utf-8
 # based on http://www.se.put.poznan.pl/zkz/pracownicy/jacekscigallo/projekty/EC2_5.pdf
-from slupy.slupy_functions import *
+from uls.global_functions import *
 
 
 def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
-    def x_niesymetryczny(lambda_bet_func, d_func, n_ed_func, e_s1_func, sigma_s2_func, as2_func, a2_func, eta_bet_func,
+    def x_asymmetric(lambda_bet_func, d_func, n_ed_func, e_s1_func, sigma_s2_func, as2_func, a2_func, eta_bet_func,
                          f_cd_func, b_func):
         x_func = round(1 / lambda_bet_func * (d_func - np.sqrt(
             d_func ** 2 - (2 * (n_ed_func * 10 ** -3 * e_s1_func - sigma_s2_func * as2_func * (d_func - a2_func))) /
@@ -91,7 +91,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
     if as2 <= as2_min:
         as2 = as2_min
-        x = round(x_niesymetryczny(lambda_bet, d, n_ed, e_s1, sigma_s2, as2, a2, eta_bet, f_cd, b), 6)
+        x = round(x_asymmetric(lambda_bet, d, n_ed, e_s1, sigma_s2, as2, a2, eta_bet, f_cd, b), 6)
         print(f'x = {x}')
 
         if x < x_min_yd:
@@ -111,7 +111,7 @@ def main(h, b, a1, a2, m_ed, n_ed, eta_bet, lambda_bet, f_cd):
 
             if x <= x_min_minus_yd:
                 sigma_s2 = -f_yd
-                x = round(x_niesymetryczny(lambda_bet, d, n_ed, e_s1, sigma_s2, as2, a2, eta_bet, f_cd, b), 6)
+                x = round(x_asymmetric(lambda_bet, d, n_ed, e_s1, sigma_s2, as2, a2, eta_bet, f_cd, b), 6)
                 print(f'x = {x}')
             else:
                 sigma_s2 = sigma_func(epsilon_cu3, es, x, a2)
