@@ -13,7 +13,7 @@ To do list:
 - [x] check and fix symmetric reincorcement for extension
 - [x] check and fix asymmetric reincorcement for extension
 - [x] check and fix diagnostic for extension
-- [ ] change value of Epsilon c3/cu3 for >C50 concrete
+- [x] change value of Epsilon c3/cu3 for >C50 concrete
 
 ### Basic values:
 - Es = 200,000 MPa
